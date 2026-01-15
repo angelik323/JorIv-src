@@ -1,0 +1,27 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+@import '@/styles/margin';
+
+* {
+  transition: all 0.5s;
+}
+
+body {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.q-breadcrumbs__el {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.3rem;
+}
+
+.containerBreadCums {
+  @include Asmall() {
+    margin-top: 0;
+  }
+
+  @include smallTablet() {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,19 @@
+.table-title-center {
+  .q-table__top {
+    position: relative;
+    display: block;
+    padding-top: 0 !important;
+    padding-bottom: 12px;
+    min-height: 36px;
+  }
+
+  .q-table__title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    text-align: center;
+    margin: 0;
+    font-weight: 700;
+  }
+}

@@ -1,0 +1,17 @@
+.container-info-card {
+  border: 1px solid #b6b7bb;
+  background-color: rgb(239 240 246);
+  border-radius: 7px;
+  padding: 15px 35px;
+  width: 100%;
+
+  .info-card-value {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .info-card-description {
+    opacity: 0.4;
+    margin-bottom: 0px;
+  }
+}

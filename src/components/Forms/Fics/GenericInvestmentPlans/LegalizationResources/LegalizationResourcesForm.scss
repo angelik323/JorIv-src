@@ -1,0 +1,13 @@
+:deep(.amounts-table) {
+  .q-field {
+    padding-bottom: 0 !important;
+  }
+
+  .q-select .q-field__native {
+    min-height: unset;
+  }
+}
+
+.custom-bottom-row-text {
+  color: $vino-pressed;
+}

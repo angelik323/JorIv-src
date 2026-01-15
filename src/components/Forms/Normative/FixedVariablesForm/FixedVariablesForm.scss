@@ -1,0 +1,21 @@
+.fixed-variables {
+  &__container {
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  &__item {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(25, 118, 210, 0.04);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .col-md-10 {
+      width: 100%;
+    }
+  }
+}

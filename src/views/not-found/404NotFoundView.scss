@@ -1,0 +1,17 @@
+.header {
+  &-section {
+    &--title {
+      font-size: 4rem;
+      font-weight: 600;
+      margin: 0;
+      color: #333742;
+      padding-bottom: 0.2em;
+    }
+
+    &--description {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333742;
+    }
+  }
+}

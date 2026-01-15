@@ -1,0 +1,31 @@
+.my-20 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.my-30 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.center {
+  justify-content: space-between;
+  align-items: center;
+}
+.size-18 {
+  font-size: 1.13rem !important;
+}
+
+.border-rounded {
+  border-radius: 20px !important;
+  border: 1px solid rgba(0, 0, 0, 0.12)!important;
+  padding: 24px;
+}
+
+.progress-bar-rounded {
+  flex: 1;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.block{
+  display: flex;
+}

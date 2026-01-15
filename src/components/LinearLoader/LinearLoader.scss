@@ -1,0 +1,13 @@
+.linearloader {
+  &__container {
+    width: 100%;
+    max-width: 60px;
+    background-color: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+
+    .q-linear-progress {
+      color: #762344;
+    }
+  }
+}

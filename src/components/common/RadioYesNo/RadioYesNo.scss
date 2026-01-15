@@ -1,0 +1,23 @@
+.hiddenLayer {
+  position: relative;
+}
+
+.hiddenLayer::after {
+  content: '';
+  background: #ff000000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: not-allowed;
+}
+
+:deep(.q-field__bottom > .q-field__messages) {
+  text-align: center !important;
+  margin-top: -0.5rem;
+}
+
+.q-field-custom-margin {
+  margin-top: -0.5rem;
+}

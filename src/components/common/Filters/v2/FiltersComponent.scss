@@ -1,0 +1,114 @@
+.menu {
+  &__card {
+    &--container {
+      display: block;
+      width: 100%;
+      border-radius: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      position: relative;
+      margin-bottom: 4%;
+    }
+
+    &--selectors {
+      margin-bottom: 15px;
+    }
+
+    &--actions {
+      position: absolute;
+      bottom: -1.2rem;
+      left: 2%;
+    }
+
+    &--actions-centers {
+      position: absolute;
+      bottom: -1.2rem;
+      left: 50%;
+      transform: translate(-50%, 0%);
+    }
+  }
+
+  &__action {
+    &--bg-white {
+      background: white !important;
+      border-radius: 20px;
+      border: solid 1px $primary_fiduciaria !important;
+      color: $primary_fiduciaria !important;
+    }
+
+    &--bg-indigo {
+      background: $primary_fiduciaria !important;
+      border-radius: 20px;
+    }
+
+    &--bg-primary {
+      background: $primary_fiduciaria_minus !important;
+      border-radius: 20px;
+    }
+
+    &--center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .menu {
+    &__card {
+      &--actions-centers {
+        position: absolute;
+        bottom: -.9rem;
+        left: 50%;
+        transform: translate(-50%, 0%);
+      }
+    }
+  }
+}
+
+form {
+  border: none;
+}
+
+
+.q-select--with-chips {
+  .q-field__control {
+    max-height: 40px;
+
+    .q-field__control-container {
+      overflow-y: auto;
+    }
+  }
+}
+
+.q-field__control {
+  .q-chip--outline {
+    background-color: transparent;
+    border: 1.5px solid $primary_fiduciaria;
+    padding: 0px 10px;
+    margin: 1px 2px;
+
+    .q-chip__content {
+      color: $primary_fiduciaria;
+    }
+
+    .q-chip__icon--remove {
+      font-size: 15px;
+      width: 18px;
+      height: 18px;
+      color: $primary_fiduciaria;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+  }
+}
+
+.filters__checkbox .q-checkbox__bg {
+  color: $orange !important;
+  border-radius: 7px !important;
+  -webkit-border-radius: 7px !important;
+  -moz-border-radius: 7px !important;
+  -ms-border-radius: 7px !important;
+  -o-border-radius: 7px !important;
+}

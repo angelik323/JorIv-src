@@ -1,0 +1,27 @@
+.btn-custom-style {
+  border-radius: 20px;
+  padding: 9px 20px;
+}
+
+.btn-table {
+  &__allow {
+    color: $primary_fiduciaria;
+    border-radius: 20px;
+    width: 130px;
+    height: 32px;
+    font-size: 13px;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  &__disallow {
+    color: #ffffff;
+    background: $primary_fiduciaria;
+    border-radius: 20px;
+    width: 130px;
+    height: 32px;
+    font-size: 13px;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+}

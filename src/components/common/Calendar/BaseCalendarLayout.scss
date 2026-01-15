@@ -1,0 +1,301 @@
+.d-calendar {
+  &-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 2rem;
+    letter-spacing: normal;
+    margin: 0 0 16px 0;
+  }
+
+  &-options {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-table {
+    &-header,
+    &-body,
+    &-body-daily {
+      &.weekly {
+        display: grid;
+        grid-template-columns: 125px repeat(7, 1fr);
+        column-gap: 1rem;
+      }
+
+      &.daily {
+        display: grid;
+        grid-template-columns: 125px 1fr;
+        column-gap: 1rem;
+      }
+
+      padding: 12px 10px;
+      font-weight: 500;
+      font-size: 1rem;
+      color: $primary_fiduciaria_minus;
+      text-align: center;
+    }
+
+    &-body {
+      .pill-time {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 0;
+        text-align: center;
+        font-size: 1rem;
+        height: 100%;
+      }
+
+      .pill-event {
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        background-color: #ffece6;
+        border-radius: 8px;
+        padding: 4px 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .pill-event__text {
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-align: center;
+        }
+
+        &:hover {
+          background-color: #ffd6cc;
+        }
+
+        &.has-events {
+          background-color: $positive_background;
+          border: 1px solid #e0e0e0;
+        }
+
+        &.is-marked-day,
+        &.is-holiday {
+          background-color: $negative_background;
+        }
+
+        span {
+          display: block;
+          width: 100%;
+        }
+      }
+
+      .day-cell {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-height: 60px;
+        padding: 4px;
+      }
+    }
+
+    &-body-daily {
+      .pill-time {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 0;
+        text-align: center;
+        font-size: 1rem;
+        height: 100%;
+      }
+
+      .pill-event {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        height: 100%;
+        width: 100%;
+        padding: 8px 10px;
+
+        &.has-events {
+          background-color: $positive_background;
+          padding: 0 10px;
+          border: 1px solid #e0e0e0;
+        }
+
+        &.is-marked-day,
+        &.is-holiday {
+          background-color: $negative_background;
+        }
+      }
+
+      .day-cell {
+        flex: 1;
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  &-grid {
+    &-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 32px;
+      padding: 12px;
+      font-weight: 500;
+      font-size: 1rem;
+      color: $primary_fiduciaria;
+      text-align: center;
+
+      > span:nth-child(7n + 1) {
+        color: $primary_fiduciaria_minus;
+      }
+
+      > span:nth-child(7n) {
+        color: #a0a0a0;
+      }
+    }
+
+    &-body {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 16px;
+    }
+
+    &-item {
+      min-height: 150px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &-label {
+        font-weight: 500;
+        font-size: 1rem;
+        color: $primary_fiduciaria;
+      }
+
+      &.has-events {
+        background-color: $positive_background;
+        cursor: pointer;
+      }
+
+      &.is-marked-day {
+        background-color: $negative_background;
+        color: #f0f0f0;
+        border-radius: 50%;
+      }
+
+      &.is-holiday {
+        color: $primary_fiduciaria_minus;
+      }
+
+      &.is-sunday {
+        .d-calendar-grid-item-label {
+          color: $primary_fiduciaria_minus;
+        }
+      }
+
+      &.is-saturday,
+      &.is-outside-month {
+        .d-calendar-grid-item-label {
+          color: #a0a0a0;
+        }
+      }
+    }
+  }
+}
+
+.y-calendar-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, auto);
+  gap: 2rem;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 30px;
+
+  @media (min-width: 2000px) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, auto);
+  }
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+
+  .y-calendar {
+    &-header,
+    &-body {
+      display: grid;
+      text-align: center;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    &-body {
+      gap: 16px;
+
+      > div {
+        width: 52px;
+        height: 52px;
+        margin: 0 auto;
+        line-height: 52px;
+        border-radius: 50%;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+
+        &:nth-child(7n + 1) {
+          color: $primary_fiduciaria;
+        }
+
+        &:nth-child(7n) {
+          color: #a0a0a0;
+        }
+      }
+    }
+
+    &.has-events {
+      background-color: $positive_background;
+      border-radius: 50%;
+      cursor: pointer;
+      color: #000;
+    }
+
+    &.is-marked-day {
+      background-color: $primary_fiduciaria;
+      color: #f0f0f0;
+      border-radius: 50%;
+    }
+
+    &.is-holiday {
+      color: $primary_fiduciaria_minus;
+    }
+
+    &.is-outside-month {
+      color: #a0a0a0;
+    }
+  }
+}
+
+.y-calendar-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.calendar-tooltip {
+  max-width: 180px;
+  padding: 10px;
+}

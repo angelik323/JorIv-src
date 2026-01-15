@@ -1,0 +1,8 @@
+$background-login: '@/assets/images/login_background-fiduprevisora.png';
+
+.auth-layout {
+  background: url($background-login);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100dvh;
+}

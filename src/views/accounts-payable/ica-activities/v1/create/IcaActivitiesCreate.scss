@@ -1,0 +1,9 @@
+.btn-move-md {
+  transform: none;
+}
+
+@media (min-width: 1100px) {
+  .btn-move-md {
+    transform: translateX(32px);
+  }
+}

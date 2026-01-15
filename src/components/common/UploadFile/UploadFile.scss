@@ -1,0 +1,58 @@
+.q-uploader__list {
+  display: none !important;
+
+  .scroll {
+    overflow: hidden !important;
+  }
+}
+
+.file-img {
+  min-height: 130px;
+  max-height: 250px;
+
+  .q-img__container {
+    min-height: 130px;
+    max-height: 250px;
+  }
+
+  .q-img__image {
+    min-height: 130px;
+    max-height: 250px;
+  }
+}
+
+.separator {
+  &__custom {
+    &--container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &--line {
+      width: 100px;
+      height: 1px;
+      border-radius: 50px;
+      background: #c5c5c5;
+    }
+
+    &--circle {
+      margin: 10px;
+      height: 10px;
+      width: 10px;
+      border: 2px solid #c5c5c5;
+      border-radius: 50px;
+    }
+  }
+}
+
+
+.q-uploader__dnd {
+  border-radius: 20px;
+  outline: 1px dashed rgb(31, 38, 84);
+  outline-offset: -6px;
+  background: #1f265466;
+}

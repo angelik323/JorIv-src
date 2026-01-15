@@ -1,0 +1,35 @@
+.accordeon-item {
+  border-radius: 50% !important;
+
+  .title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .title::first-letter {
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+  }
+
+  .q-icon:before,
+  .q-icon:after {
+    color: $primary_fiduciaria !important;
+  }
+}
+
+.title-modal {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.title-modal::first-letter,
+.label-modal::first-letter {
+  text-transform: uppercase;
+}

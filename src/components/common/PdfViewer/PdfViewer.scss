@@ -1,0 +1,50 @@
+.pdf-viewer {
+  &__container {
+    width: 100%;
+    min-height: 500px;
+    position: relative;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+  }
+
+  &__message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  &__viewer {
+    width: 100%;
+    height: 1000px;
+    border: none;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    &__viewer {
+      height: 400px;
+      min-height: 400px;
+    }
+
+    &__container {
+      min-height: 400px;
+    }
+
+    &__message {
+      min-height: 400px;
+      padding: 1rem;
+    }
+  }
+
+  @media print {
+    &__container {
+      border: none;
+      background: transparent;
+    }
+  }
+}

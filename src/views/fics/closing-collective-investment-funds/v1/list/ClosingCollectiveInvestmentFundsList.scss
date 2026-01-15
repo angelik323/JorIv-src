@@ -1,0 +1,3 @@
+.hide-select-all :deep(thead tr th:first-child .q-checkbox) {
+  display: none;
+}

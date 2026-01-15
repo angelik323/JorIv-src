@@ -1,0 +1,200 @@
+.q-table__card {
+  box-shadow: none;
+}
+
+.page {
+  color: #9d9ea2;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.page-enable {
+  color: $primary_fiduciaria;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+div.custom-table {
+  .q-table__top {
+    color: $black-90;
+    padding: 0;
+    margin-bottom: 16px;
+  }
+
+  .q-table {
+    box-sizing: content-box;
+    border-spacing: 0px 1rem !important;
+
+    &__title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: normal;
+    }
+
+    th {
+      color: $vino-pressed;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.25rem;
+    }
+
+    tr {
+      border-radius: 4px;
+      height: 0px;
+    }
+
+    td {
+      font-size: 0.875rem;
+
+      &:first-child {
+        &::after,
+        &::before {
+          border-top-left-radius: 1rem;
+          border-bottom-left-radius: 1rem;
+        }
+      }
+
+      &:last-child {
+        &::after,
+        &::before {
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+        }
+      }
+    }
+  }
+
+  .q-table__bottom {
+    border-top: 0px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .q-btn--round {
+    border: 1px solid black;
+  }
+
+  .q-checkbox__bg {
+    color: $orange !important;
+    border-radius: 7px !important;
+    -webkit-border-radius: 7px !important;
+    -moz-border-radius: 7px !important;
+    -ms-border-radius: 7px !important;
+    -o-border-radius: 7px !important;
+
+    // This is to ensure the checkbox is centered within its container
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .disabled,
+  [disabled] {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+  }
+}
+
+.q-table tbody td:first-child {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-top-color: #dcdcdc;
+  border-top-style: solid;
+  border-bottom-color: #dcdcdc;
+  border-bottom-style: solid;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-left-color: #dcdcdc;
+  border-left-style: solid;
+  border-left-width: 1px;
+}
+
+.q-table tbody td:last-child {
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  border-top-color: #dcdcdc;
+  border-top-style: solid;
+  border-bottom-color: #dcdcdc;
+  border-bottom-style: solid;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-right-color: #dcdcdc;
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+.q-table tbody td {
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-top-color: #dcdcdc;
+  border-top-style: solid;
+  border-bottom-color: #dcdcdc;
+  border-bottom-style: solid;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.table {
+  &__header {
+    &--title {
+      padding: 0;
+    }
+  }
+}
+
+.overflow-wrap {
+  overflow-wrap: break-word;
+}
+
+.contActions {
+  display: flex;
+  justify-content: center;
+}
+
+.my-sticky-header-table {
+  /* Set fixed height for the table */
+  max-height: 600px;
+
+  /* Specify background color for sticky headers; important for visibility */
+  .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th {
+    background-color: #fff;
+  }
+
+  thead tr th {
+    /* Make table headers sticky */
+    position: sticky;
+    z-index: 1;
+  }
+
+  thead tr:first-child th {
+    /* Position the first header row at the top */
+    top: 0;
+  }
+
+  /* Styles for when the table is loading */
+  &.q-table--loading {
+    thead tr:last-child th {
+      /* Offset for the last child in the header during loading */
+      top: 48px;
+    }
+  }
+
+  tbody {
+    /* Prevent scrolling behind sticky top row on focus */
+    scroll-margin-top: 48px;
+  }
+}
+
+.q-table__middle::-webkit-scrollbar {
+  /* Cambia el grosor del scroll horizontal */
+  height: 8px;
+}
+
+.custom-outlined-border .q-field__control {
+  border: 1px solid $primary_fiduciaria !important;
+  border-radius: 8px !important;
+}

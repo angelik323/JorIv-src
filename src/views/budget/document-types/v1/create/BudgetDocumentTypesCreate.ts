@@ -1,0 +1,164 @@
+// Vue - pinia - moment
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+// Interfaces
+import { ITabs } from '@/interfaces/global'
+import { IBalanceValidationItemModel } from '@/interfaces/customs/budget/BudgetDocumentTypes'
+
+// Composables
+import { useGoToUrl, useMainLoader, useUtils } from '@/composables'
+
+// Stores
+import { useResourceManagerStore } from '@/stores/resources-manager'
+import { useBudgetDocumentTypesStore } from '@/stores/budget/document-types'
+
+const useBudgetDocumentTypesCreate = () => {
+  const { _createAction } = useBudgetDocumentTypesStore('v1')
+
+  const { _getResources, _resetKeys } = useResourceManagerStore('v1')
+
+  const { openMainLoader } = useMainLoader()
+  const { defaultIconsLucide } = useUtils()
+  const { goToURL } = useGoToUrl()
+  const router = useRouter()
+
+  const headerProps = {
+    title: 'Crear tipo de documentos presupuestales',
+    breadcrumbs: [
+      { label: 'Inicio', route: 'HomeView' },
+      { label: 'Presupuesto' },
+      {
+        label: 'Tipos de documentos presupuestales',
+        route: 'BudgetDocumentTypesList',
+      },
+      { label: 'Crear' },
+    ],
+  }
+
+  const tabs = ref<ITabs[]>([
+    {
+      name: 'basic_data',
+      label: 'Datos básicos*',
+      icon: defaultIconsLucide.bulletList,
+      outlined: true,
+      disable: true,
+      show: true,
+      required: false,
+    },
+    {
+      name: 'balance_validation',
+      label: 'Validación de saldos',
+      icon: defaultIconsLucide.listCheck,
+      outlined: true,
+      disable: true,
+      show: true,
+      required: false,
+    },
+  ])
+
+  const tabActive = ref(tabs.value[0].name)
+  const tabActiveIdx = ref(
+    tabs.value.findIndex((tab) => tab.name === tabActive.value)
+  )
+
+  const hasBalanceValidation = ref<boolean>(false)
+
+  const basicDataFormRef = ref()
+  const balanceValidationFormRef = ref()
+
+  const validateForms = async () => {
+    const forms = [basicDataFormRef, balanceValidationFormRef]
+    if (forms.length && forms[tabActiveIdx.value]) {
+      return forms[tabActiveIdx.value].value.validateForm()
+    }
+    return false
+  }
+
+  const nextTab = async () => {
+    if (!(await validateForms())) return
+    tabActiveIdx.value = 1
+    tabActive.value = tabs.value[tabActiveIdx.value].name
+  }
+
+  const onSubmit = async () => {
+    if (!(await validateForms())) return
+
+    openMainLoader(true)
+
+    const payload = basicDataFormRef.value.getFormData()
+    const balanceValidation = balanceValidationFormRef.value.getFormData()
+    if (balanceValidation && hasBalanceValidation.value) {
+      payload.balance_validations = balanceValidation.map(
+        (item: IBalanceValidationItemModel) => ({
+          accounting_budget_mapping_parameter_id:
+            item.accounting_budget_mapping_parameter_id,
+          code_movement_id: item.code_movement_id,
+          balance_validation_level_id: item.balance_validation_level_id,
+          validates_document_type: item.validates_document_type,
+          validated_document_type_id: item.validated_document_type_id,
+        })
+      )
+    }
+    if (!payload.has_expiration_date) {
+      delete payload.expiration_periodicity
+    }
+
+    const documentTypeResponse = await _createAction(payload)
+
+    if (documentTypeResponse) {
+      router.push({ name: 'BudgetDocumentTypesList' })
+    }
+
+    openMainLoader(false)
+  }
+
+  onMounted(async () => {
+    openMainLoader(true)
+    _resetKeys({
+      budget: [
+        'budget_levels',
+        'budget_document_validities',
+        'budget_document_expiration_periodicities',
+        'budget_document_numbering_types',
+        'code_movements',
+        'budget_document_types_selector',
+        'accounting_budget_mapping_parameters',
+        'code_movements_types_contracting',
+      ],
+    })
+    await _getResources({
+      budget: [
+        'budget_levels',
+        'budget_document_validities',
+        'budget_document_expiration_periodicities',
+        'budget_document_numbering_types',
+        'code_movements',
+        'budget_document_types_selector',
+        'accounting_budget_mapping_parameters',
+      ],
+    })
+    openMainLoader(false)
+  })
+
+  const previousTab = () => {
+    tabActiveIdx.value = 0
+    tabActive.value = tabs.value[tabActiveIdx.value].name
+  }
+
+  return {
+    basicDataFormRef,
+    balanceValidationFormRef,
+    headerProps,
+    tabs,
+    tabActive,
+    tabActiveIdx,
+    hasBalanceValidation,
+    goToURL,
+    nextTab,
+    onSubmit,
+    previousTab,
+  }
+}
+
+export default useBudgetDocumentTypesCreate

@@ -1,0 +1,11 @@
+.input-with-button {
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+  width: 100%;
+
+  .input-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+}

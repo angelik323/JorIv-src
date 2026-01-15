@@ -1,0 +1,28 @@
+:deep(.movements-table) {
+  .q-field__inner {
+    margin-top: 11px;
+  }
+  .q-checkbox__inner {
+    margin-top: -11px;
+  }
+  .q-field__messages col {
+    margin-top: 1px;
+  }
+  .q-table th,
+  .q-table td {
+    padding: 0 7px;
+  }
+  .q-field--with-bottom {
+    padding-bottom: 12px;
+  }
+  .q-field__bottom {
+    padding: 0;
+  }
+  .q-select .q-field__native {
+    min-height: unset;
+  }
+}
+
+.no-mb-card {
+  margin-bottom: 0 !important;
+}

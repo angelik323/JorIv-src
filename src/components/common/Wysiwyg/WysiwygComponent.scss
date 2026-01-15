@@ -1,0 +1,8 @@
+:deep(
+    .q-editor__toolbar
+      .q-btn-dropdown:not(.custom):not(.q-btn-dropdown--outline):not(
+        .q-btn-dropdown--flat
+      )
+  ) {
+  background-color: transparent !important;
+}

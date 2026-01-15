@@ -1,0 +1,40 @@
+.custom-toggles {
+  --toggle-transition-duration: 0.2s;
+  --toggle-transition-timing: ease;
+
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: background-color var(--toggle-transition-duration)
+      var(--toggle-transition-timing),
+    width var(--toggle-transition-duration) var(--toggle-transition-timing),
+    height var(--toggle-transition-duration) var(--toggle-transition-timing);
+}
+
+.custom-toggles__dot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: margin ease 0.2s;
+}
+
+.custom-toggles__text {
+  position: absolute;
+  font-family: inherit;
+  user-select: none;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion) {
+  .custom-toggles,
+  .custom-toggles *,
+  .custom-toggles *::before,
+  .custom-toggles *::after {
+    animation: none !important;
+    transition: none !important;
+    transition-duration: none !important;
+  }
+}

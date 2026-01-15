@@ -1,0 +1,45 @@
+.btn-header {
+  border-radius: 20px;
+  padding: 9px 20px;
+  background: $primary_fiduciaria;
+}
+
+.mdi-color {
+  background-color: #762344 !important;
+}
+
+.btn-footer {
+  border-radius: 50px;
+  padding: 9px 20px;
+  background-color: #f45100 !important;
+}
+.ModalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.ModalContent__Img {
+  width: 60px;
+  height: auto;
+}
+.ModalContent__Text {
+  font-family: Nunito Sans;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0%;
+  text-align: center;
+}
+.ModalContent__ContentBtn{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.ModalContent__Btn{
+  background: transparent !important;
+  color: #F45100 !important;
+  border: 1px solid #F45100;
+}

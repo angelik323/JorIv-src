@@ -1,0 +1,10 @@
+:deep(.format-editor .q-field__control),
+:deep(.format-editor-bottom .q-field__control) {
+  min-height: 170px;
+}
+
+:deep(.format-editor .q-field__control textarea),
+:deep(.format-editor-bottom .q-field__control textarea) {
+  font-size: 18px;
+  line-height: 1;
+}

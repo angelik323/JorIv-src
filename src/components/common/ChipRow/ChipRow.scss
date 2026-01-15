@@ -1,0 +1,14 @@
+.chip-limit {
+  max-width: 300px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.chip-text {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}

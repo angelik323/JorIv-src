@@ -1,0 +1,44 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+@import '@/styles/margin';
+
+* {
+  transition: all 0.5s;
+}
+
+body {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.title-section-dashboard {
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 3.5rem;
+  margin: 0;
+  color: #1A1A1A;
+  padding-bottom: 0.2em;
+}
+
+.subtitle-section-dashboard {
+  font-size: 1rem;
+  line-height: rem;
+  color: #545861;
+  margin-top: -10px;
+  margin-right: 10px;
+}
+
+.bg-primary {
+  background: $primary !important;
+}
+
+.btn-header {
+  border-radius: 20px;
+  padding: 9px 20px;
+}
+
+.back-btn {
+  border-radius: 20px;
+  width: 80px;
+  height: 32px;
+  font-size: 13px;
+}

@@ -1,0 +1,33 @@
+* {
+  transition: all 0.5s;
+}
+
+body {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.cost-center-table {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  padding: 0% 3%;
+
+  &__title {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-bottom: 1%;
+
+    &-heading {
+      padding: 0;
+      margin: 0;
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
+}

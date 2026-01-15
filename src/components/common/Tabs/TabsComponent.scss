@@ -1,0 +1,27 @@
+@import '@/styles/variables';
+
+.tabs {
+  &-custom-v3 {
+    &.horizontal-scrollable {
+      overflow-x: auto;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .q-chip {
+      min-height: 38px !important;
+      color: $grey-7 !important;
+      border-radius: 6px !important;
+      border-color: $grey-4 !important;
+    }
+
+    .selected-tab {
+      background-color: white !important;
+      color: $primary_fiduciaria !important;
+      border-radius: 6px !important;
+      border-color: $primary_fiduciaria !important;
+    }
+  }
+}

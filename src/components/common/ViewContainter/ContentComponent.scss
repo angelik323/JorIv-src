@@ -1,0 +1,11 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+@import '@/styles/margin';
+
+* {
+  transition: all 0.5s;
+}
+
+body {
+  font-family: 'Poppins', sans-serif !important;
+}

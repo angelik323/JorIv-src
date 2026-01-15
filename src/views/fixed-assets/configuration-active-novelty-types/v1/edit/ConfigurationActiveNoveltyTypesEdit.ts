@@ -1,0 +1,147 @@
+// core
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+
+// composables
+import { useGoToUrl, useMainLoader, useUtils } from '@/composables'
+
+// interfaces
+import { ITabs } from '@/interfaces/global'
+
+import { IConfigurationActiveForm } from '@/interfaces/customs/fixed-assets/ConfigurationActiveNoveltyTypes'
+
+// stores
+import { useResourceManagerStore } from '@/stores/resources-manager'
+import { useFixedAssetsResourceStore } from '@/stores/resources-manager/fixed-assets'
+import { useActiveConfigNoveltyStore } from '@/stores/fixed-assets/configuration-active-novelty-types'
+
+const useConfigurationActiveNoveltyTypeEdit = () => {
+  // hooks
+
+  const route = useRoute()
+  const id = +route.params.id
+  const { openMainLoader } = useMainLoader()
+  const { goToURL } = useGoToUrl()
+  const { defaultIconsLucide } = useUtils()
+
+  // refs
+  const keys = ref({
+    fixed_assets: ['affectation_type'],
+  })
+
+  const basicDataFormRef = ref()
+  const novelty_form = ref<IConfigurationActiveForm | null>()
+
+  // stores
+  const fixedAssetsResourceStore = useFixedAssetsResourceStore('v1')
+  const { _updateActiveNovelty, _getActiveNoveltyById } =
+    useActiveConfigNoveltyStore('v1')
+  const { _getResources, _resetKeys } = useResourceManagerStore('v1')
+  // configs
+  const headerProps = {
+    title: 'Editar configuración de tipos de novedad activos fijos / bienes',
+    breadcrumbs: [
+      {
+        label: 'Inicio',
+        route: 'HomeView',
+      },
+      {
+        label: 'Activos fijos',
+        route: '',
+      },
+      {
+        label: 'Configuración de tipos de novedad activos fijos/bienes',
+        route: 'ConfigurationActiveNoveltyTypesList',
+      },
+      {
+        label: 'Editar',
+        route: 'ConfigurationActiveNoveltyTypesEdit',
+      },
+      {
+        label: `${id}`,
+        route: '',
+      },
+    ],
+  }
+
+  const tabs: ITabs[] = [
+    {
+      name: 'information',
+      label: 'Datos básicos',
+      icon: defaultIconsLucide.bulletList,
+      outlined: true,
+      disable: true,
+      show: true,
+      required: false,
+    },
+  ]
+
+  const tabActive = tabs[0].name
+  const tabActiveIdx = 0
+
+  // actions
+
+  const handleEdit = async () => {
+    const isValid = await basicDataFormRef.value?.validateForm()
+    if (!isValid) return
+
+    if (!novelty_form.value) return
+    const row = novelty_form.value.configuration_active_novelty_types[0]
+
+    const payload = {
+      description: row.description,
+      accounting: row.accounting,
+      affectation_type: row.affectation_type,
+    }
+
+    openMainLoader(true)
+
+    if (await _updateActiveNovelty(payload, id)) {
+      goToURL('ConfigurationActiveNoveltyTypesList')
+    }
+
+    setTimeout(() => {
+      openMainLoader(false)
+    }, 1000)
+  }
+
+  // lifecycle hooks
+
+  onMounted(async () => {
+    openMainLoader(true)
+    novelty_form.value = await _getActiveNoveltyById(id)
+
+    setTimeout(() => {
+      openMainLoader(false)
+    }, 1000)
+  })
+
+  onMounted(async () => {
+    await _getResources(keys.value)
+    await _getResources(keys.value)
+    fixedAssetsResourceStore.affectation_type = [
+      ...fixedAssetsResourceStore.affectation_type,
+    ]
+    await _getResources(keys.value)
+  })
+
+  onBeforeUnmount(() => _resetKeys(keys.value))
+
+  return {
+    // configs
+    headerProps,
+    tabs,
+    tabActive,
+    tabActiveIdx,
+
+    // refs
+    basicDataFormRef,
+    novelty_form,
+
+    // methods
+    handleEdit,
+    goToURL,
+  }
+}
+
+export default useConfigurationActiveNoveltyTypeEdit

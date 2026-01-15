@@ -1,0 +1,62 @@
+<template>
+  <q-form ref="formAuthorize">
+    <section>
+      <div class="mx-3 mt-2 mb-3">
+        <div class="q-mb-lg">
+          <p class="text-black-10 text-weight-bold text-h6 q-mb-none">
+            Autorizar
+          </p>
+        </div>
+
+        <div class="row q-col-gutter-lg mt-1">
+          <div class="col-12">
+            <GenericInput
+              :readonly="'view'.includes(action)"
+              label="Observaciones"
+              :default_value="models.observation"
+              type="textarea"
+              :required="!'view'.includes(action)"
+              :rules="
+                !'view'.includes(action)
+                  ? [
+                      (val: string) =>
+                        is_required(val, 'Las observaciones son requeridas'),
+                      (val: string) => min_length(val, 20),
+                      (val: string) => max_length(val, 200),
+                    ]
+                  : []
+              "
+              @update:modelValue="models.observation = $event"
+            />
+          </div>
+        </div>
+        <q-separator class="mt-2"></q-separator>
+      </div>
+    </section>
+  </q-form>
+</template>
+
+<script setup lang="ts">
+// components
+import GenericInput from '@/components/common/GenericInput/GenericInputComponent.vue'
+
+// logic
+import useAuthorizeForm from './AuthorizeForm'
+
+const props = withDefaults(
+  defineProps<{
+    action: 'view' | 'authorize'
+    data?: string | null
+  }>(),
+  {}
+)
+
+const emits = defineEmits(['validate:form'])
+
+const { models, formAuthorize, is_required, max_length, min_length } =
+  useAuthorizeForm(props)
+
+defineExpose({
+  validateForm: () => formAuthorize.value?.validate(),
+})
+</script>

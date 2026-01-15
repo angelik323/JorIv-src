@@ -1,0 +1,266 @@
+// ======================
+// TAMAÑO DE FUENTE
+// ======================
+:root {
+  &.font-size-level--1 {
+    font-size: 90%;
+  }
+
+  &.font-size-level-0 {
+    font-size: 100%; // Base
+  }
+
+  &.font-size-level-1 {
+    font-size: 115%;
+  }
+
+  &.font-size-level-2 {
+    font-size: 130%;
+  }
+}
+
+// ======================
+// ALTO CONTRASTE
+// ======================
+html.high-contrast-mode {
+  background-color: #000 !important;
+  color: #fff !important;
+
+  /* Fuerza herencia en TODO */
+  body * {
+    color: inherit !important;
+  }
+
+  /* Login layout */
+  .container-login {
+    background-color: #000 !important;
+  }
+  .main,
+  .auth-layout {
+    background: #111111 !important;
+  }
+
+  /* site layout */
+  #sidebar-drawer-menu,
+  #sidebar-drawer-menu ul li,
+  #sidebar-drawer-notification,
+  .custom-table,
+  .custom-table .q-table__top,
+  .custom-table .q-table__middle th,
+  .custom-table .q-table__bottom,
+  .q-menu,
+  .q-card,
+  .accessibility-drawer .accessibility-menu,
+  .q-notification,
+  .sidebar__layout--header,
+  .login__form {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #666 !important;
+  }
+
+  // Sombra para fondo oscuro
+  .login__form {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(17, 17, 17, 0.9);
+  }
+
+  // Main loader
+  .main-loader {
+    background-color: rgba(0, 0, 0, 0.8);
+    .q-card {
+      border: 1px solid #666;
+    }
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #1b1b1b !important;
+  }
+
+  .q-tooltip {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 1px solid $contrast-highlight !important;
+  }
+
+  a,
+  a:visited {
+    color: $contrast-highlight !important;
+    text-decoration: underline;
+  }
+
+  input,
+  textarea,
+  select,
+  .q-field__inner,
+  .q-field__native {
+    background-color: #302f2f !important;
+    color: #fff !important;
+    border-color: #666 !important;
+  }
+
+  button,
+  .q-btn {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+
+  .q-btn:not(.q-btn--outline) {
+    border: 1px solid #fff !important;
+  }
+
+  .q-btn:not(.custom):not(.q-btn--outline):not(.q-btn--flat) {
+    background-color: #000 !important;
+  }
+  /* Placeholders */
+  input::placeholder,
+  textarea::placeholder,
+  .q-placeholder {
+    color: #ccc !important;
+  }
+
+  /* Iconos de Quasar (q-icon) */
+  .q-icon {
+    color: $contrast-highlight !important;
+  }
+
+  /* Imágenes e iconos */
+  img {
+    filter: brightness(1.2) contrast(2) saturate(2) hue-rotate(330deg) !important;
+  }
+  svg {
+    stroke: currentColor !important;
+    color: $contrast-highlight !important;
+  }
+
+  /* Focus resaltado solo en elementos interactivos */
+  button:focus,
+  a:focus,
+  textarea:focus,
+  .q-item--clickable:focus {
+    outline: 2px solid $contrast-highlight !important;
+    outline-offset: -2px !important;
+    border: none !important;
+  }
+
+  /* Cuando el elemento con focus es un botón outline, quitar borde */
+  button.q-btn--outline:focus,
+  a.q-btn--outline:focus,
+  .q-btn--outline:focus:before {
+    border: none !important;
+  }
+}
+
+// ======================
+// RESALTAR BOTONES
+// ======================
+html.highlight-links-mode {
+  a,
+  a:visited {
+    outline: 1px solid $contrast-highlight !important;
+    outline-offset: 1px !important;
+  }
+
+  .q-item--clickable {
+    outline: 1px solid $contrast-highlight !important;
+    outline-offset: -2px !important;
+    border: none !important;
+  }
+
+  /* Se limpian los bordes de los botones */
+  .q-btn,
+  .q-btn--outline,
+  .q-btn--outline:before {
+    border: none !important;
+  }
+
+  .q-btn {
+    outline: 2px solid $contrast-highlight !important;
+    outline-offset: -2px !important;
+  }
+}
+
+// ======================
+// ESCALA DE GRISES
+// ======================
+html.grayscale-mode {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -webkit-filter: grayscale(1);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+}
+
+// ======================
+// ESTILOS DEL COMPONENTE
+// ======================
+.accessibility-drawer {
+  position: fixed;
+  top: 30%;
+  right: 0;
+  z-index: 1000;
+  height: auto;
+  transform: translateX(
+    220px
+  ); // Desplaza 200px a la derecha (ocultando el menú)
+  transition: transform 0.3s;
+  will-change: transform;
+
+  // Estado expandido
+  &--expanded {
+    transform: translateX(0);
+  }
+}
+
+.accessibility-container {
+  position: relative;
+  display: flex;
+  align-items: start;
+  flex-direction: row;
+}
+
+.accessibility-toggle {
+  border-radius: 8px 0 0 8px;
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.accessibility-menu {
+  background-color: #fff;
+  border: 1px solid $orange;
+  border-radius: 0 0 0 8px;
+  width: 220px;
+  padding: 16px;
+  word-break: break-word;
+
+  h1 {
+    font-size: 18px;
+    line-height: 32px;
+    letter-spacing: normal;
+  }
+
+  .accessibility-options {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+
+    .q-btn {
+      margin: 4px 0;
+      width: 100%;
+      justify-content: flex-start;
+      padding: 0 16px 0 8px;
+
+      .q-btn__content {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .q-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}

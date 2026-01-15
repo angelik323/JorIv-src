@@ -1,0 +1,68 @@
+import { ICardStatus } from '@/interfaces/global'
+
+export const BUDGET_STATUS_MAP: Record<number, ICardStatus> = {
+  8: {
+    icon: 'Clock',
+    bg: '#FFE7ED',
+    color: '#000',
+    iconColor: '#8D1E3D',
+    title: 'Por aprobar',
+    textColor: '#000',
+  },
+  10: {
+    icon: 'XCircle',
+    bg: '#fbebec',
+    color: '#333742',
+    iconColor: '#d21d07',
+    title: 'Rechazado',
+    textColor: '#d21d07',
+  },
+  11: {
+    icon: 'XCircle',
+    bg: '#fbebec',
+    color: '#333742',
+    iconColor: '#d21d07',
+    title: 'Anulado',
+    textColor: '#d21d07',
+  },
+  25: {
+    icon: 'Clock',
+    bg: '#FFE7ED',
+    color: '#333742',
+    iconColor: '#8D1E3D',
+    title: 'Pendiente',
+    textColor: '#8D1E3D',
+  },
+  30: {
+    icon: 'XCircle',
+    bg: '#fbebec',
+    color: '#333742',
+    iconColor: '#d21d07',
+    title: 'Con error',
+    textColor: '#d21d07',
+  },
+  55: {
+    icon: 'CheckCircle',
+    bg: '#FFEEE3',
+    color: '#333742',
+    iconColor: '#E25D0F',
+    title: 'Autorizado',
+    textColor: '#E25D0F',
+  },
+  56: {
+    icon: 'CheckCircle',
+    bg: '#FFEEE3',
+    color: '#333742',
+    iconColor: '#E25D0F',
+    title: 'Exitoso',
+    textColor: '#E25D0F',
+  },
+  63: {
+    icon: 'CheckCircle',
+    bg: '#FFEEE3',
+    color: '#333742',
+    iconColor: '#E25D0F',
+    title: 'Registrado',
+    textColor: '#E25D0F',
+  },
+}

@@ -1,0 +1,71 @@
+.menu {
+  &__card {
+    &--container {
+      display: block;
+      width: 100%;
+      border-radius: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    &--selectors {
+      margin-bottom: 15px;
+    }
+
+    &--actions {
+      position: absolute;
+      bottom: -1.2rem;
+      left: 2%;
+    }
+
+    &--actions-centers {
+      position: absolute;
+      bottom: -1.2rem;
+      left: 50%;
+      transform: translate(-50%, 0%);
+    }
+  }
+
+  &__action {
+    &--bg-white {
+      background: white !important;
+      border-radius: 20px;
+      border: solid 1px $primary_fiduciaria !important;
+      color: $primary_fiduciaria !important;
+    }
+
+    &--bg-indigo {
+      background: $primary_fiduciaria !important;
+      border-radius: 20px;
+    }
+
+    &--bg-primary {
+      background: $primary_fiduciaria_minus !important;
+      border-radius: 20px;
+    }
+
+    &--center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .menu {
+    &__card {
+      &--actions-centers {
+        position: absolute;
+        bottom: -0.9rem;
+        left: 50%;
+        transform: translate(-50%, 0%);
+      }
+    }
+  }
+}
+
+form {
+  border: none;
+}

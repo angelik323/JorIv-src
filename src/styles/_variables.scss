@@ -1,0 +1,73 @@
+$colors: (
+  'new-primary': #762344,
+  'new-primary-minus': #b02f62,
+  'secondary': #ffed4a,
+  'success': #38c172,
+  'danger': #e3342f,
+  'orange': #f45100,
+  'mistyrose': #ffeee3,
+);
+
+$spacings: (
+  '0': 0%,
+  '1': 1%,
+  '2': 2%,
+  '3': 3%,
+  '4': 4%,
+  '5': 5%,
+  '6': 6%,
+  '7': 7%,
+  '8': 8%,
+  '9': 9%,
+  '10': 10%,
+);
+
+$fontSize: (
+  '0': 0rem,
+  '1': 1rem,
+  '2': 2rem,
+  '3': 3rem,
+  '4': 4rem,
+  '5': 5rem,
+  '6': 6rem,
+  '7': 7rem,
+  '8': 8rem,
+  '9': 9rem,
+  '10': 10rem,
+);
+
+//Colors
+$color-blue-night: #1f2654;
+$color-menta: #66c8c3;
+$gris-claro: #dcdcdc;
+$indigo: #0529d8;
+$blue-dark-king: #031a8a;
+$blue-cards-link: #e6edff;
+$blue-light-cards-link: #f7faff;
+$blue-action-btn: $primary_fiduciaria;
+$green-button-answer: #39ba2e;
+$azulejo: #f0f2ff;
+$light-gray: #dcdcdc;
+$primary: $primary_fiduciaria;
+$secondary: #0529d8;
+$white: #f4f9ff;
+$accent: #66c8c3;
+$gray: #e1e1e1;
+$orange-dark: #b02f62;
+$vino-pressed: #631937;
+
+//Size Markup
+$Asmall: 575.98px;
+$small: 576px;
+$Atablet: 767.98px;
+$tablet: 767.98px;
+$Alaptop: 991.98px;
+$laptop: 992px;
+$Adesktop: 1199.98px;
+$desktop: 1200px;
+
+/* maxwidth */
+$mWtablet: 540px;
+$mWlaptop: 720px;
+$mWdesktop: 960px;
+$mWfull: 1140px;

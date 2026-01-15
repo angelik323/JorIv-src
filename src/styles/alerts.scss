@@ -1,0 +1,82 @@
+.alert {
+  &__message {
+    &--success {
+      background: $positive_background;
+      border: 2px solid $positive;
+      color: $positive !important;
+    }
+
+    &--error {
+      background-color: $negative_background;
+      border: 2px solid $negative;
+      color: $negative !important;
+    }
+
+    &--warning {
+      background: $warning_background;
+      border: 2px solid $warning;
+      color: $warning !important;
+      font-weight: 600;
+    }
+
+    &--info {
+      background-color: $info_background;
+      border: 2px solid $info;
+      color: $info !important;
+    }
+  }
+}
+
+// useAlertV2
+.custom-alert {
+  border-radius: 10px;
+  width: 490px;
+
+  .q-notification__wrapper {
+    padding: 2px 16px;
+
+    .q-notification__content:has(.q-notification__caption) {
+      .q-icon {
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  .q-notification__message {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .q-notification__caption {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    line-height: 0.875rem;
+  }
+  .q-notification__actions {
+    color: inherit;
+  }
+
+  &--success {
+    background: $positive_background;
+    border: 1px solid $positive;
+    color: $positive !important;
+  }
+
+  &--error {
+    background-color: $negative_background;
+    border: 1px solid $negative;
+    color: $negative !important;
+  }
+
+  &--warning {
+    background: $warning_background;
+    border: 1px solid $warning;
+    color: $warning !important;
+  }
+
+  &--info {
+    background-color: $info_background;
+    border: 1px solid $info;
+    color: $info !important;
+  }
+}

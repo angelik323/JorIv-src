@@ -1,0 +1,37 @@
+export enum TrustBusinessTypeID {
+  SOCIEDAD_FIDUCIARIA = 10,
+  FIDUCIA_INVERSION = 1,
+  FIDUCIA_INMOBILIARIA = 2,
+  FIDUCIA_ADMINISTRACION = 3,
+  FIDUCIA_GARANTIA = 4,
+  FIDUCIA_SEGURIDAD_SOCIAL = 5,
+  FONDOS_INVERSION_COLECTIVA = 9,
+}
+
+export enum TrustBusinessStatusID {
+  PREOPERATIONAL = 56,
+  VALID = 57,
+  EXPIRED = 58,
+  LIQUIDATION = 59,
+  LIQUIDATED = 67,
+  SUSPENDED = 60,
+  AUTHORIZED = 71,
+  REGISTERED = 63,
+  REJECTED = 10,
+  TO_MANAGE = 82,
+  HAS_DELETE = 78,
+}
+
+export enum BusinessLineStatusID {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  CANCELLED = 39,
+}
+
+export enum PaymentPlanStatusID {
+  AMORTIZED = 93,
+  PAID = 92,
+  OVERDUE = 58,
+  CANCELED = 39,
+  PENDING = 25,
+}

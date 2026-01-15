@@ -1,0 +1,29 @@
+.color {
+  &__bg {
+    &--lightblue {
+      background: #e3e9f8;
+    }
+
+    &--greydark {
+      background: #333742
+    }
+
+    &--blue {
+      background: $primary_fiduciaria
+    }
+  }
+
+  &__text {
+    &--lightblue {
+      color: #e3e9f8;
+    }
+
+    &--greydark {
+      color: #333742
+    }
+
+    &--blue {
+      color: $primary_fiduciaria
+    }
+  }
+}

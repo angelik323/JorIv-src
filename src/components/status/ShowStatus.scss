@@ -1,0 +1,88 @@
+.card {
+  &__container {
+    &--rounded {
+      border-radius: 50px;
+      width: min-content;
+      height: 26px;
+      display: flex;
+      align-content: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &--text {
+      height: 18px;
+    }
+
+    &--item {
+      padding-top: 0;
+      padding-bottom: 0;
+      align-items: center;
+    }
+
+    &--icon {
+      &-right {
+        width: 26px;
+        height: 26px;
+        align-items: flex-start !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+      }
+
+      &-left {
+        width: 26px;
+        height: 26px;
+        max-width: 26px;
+        min-width: 26px;
+      }
+    }
+  }
+
+  &__status {
+    font-family: 'Nunito Sans', sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+
+    &--warning {
+      background: #fffac0;
+    }
+
+    &--success {
+      background: #e1ffe2;
+    }
+
+    &--cancel {
+      background: #FFC7C6;
+    }
+
+    &--info {
+      background: #daebff;
+    }
+  }
+
+  &__icon {
+    &--info {
+      color: $info;
+    }
+
+    &--warning {
+      color: $warning;
+    }
+
+    &--success {
+      color: $positive;
+    }
+
+    &--cancel {
+      color: $negative;
+    }
+
+    &--reschedule {
+      color: #EAC102;
+    }
+  }
+}
