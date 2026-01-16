@@ -33,7 +33,7 @@
                 validateRouter(
                   'BillingCollection',
                   'CollectionTrustCommissionList',
-                  'create'
+                  'action_generate'
                 )
               "
               label="Aplicar recaudo"

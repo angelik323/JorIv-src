@@ -2,6 +2,9 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useFiduciaryBusinessCommissionsV2 } from './fiduciary-business-commissions-v2'
 import { executeApi } from '@/apis'
 import { URL_PATH_SETTLEMENT_COMMISSIONS } from '@/constants/apis'
+import axios from 'axios'
+
+//Interfaces
 import {
   IFiduciaryBusinessCommissionsResponseV2,
   IFiduciaryBusinessCommissionsFormV2,
@@ -239,6 +242,10 @@ const mockFiduciaryBusinessCommissions = [
 jest.mock('@/composables', () => ({
   useAlert: jest.fn(() => ({ showAlert: jest.fn() })),
   useShowError: jest.fn(() => ({ showCatchError: jest.fn(() => 'Error!') })),
+  useUtils: jest.fn(() => ({
+    getNameBlob: jest.fn(),
+    downloadBlobXlxx: jest.fn(),
+  })),
 }))
 
 describe('useFiduciaryBusinessCommissionsV2', () => {
@@ -359,5 +366,45 @@ describe('useFiduciaryBusinessCommissionsV2', () => {
         params: { ...params, paginate: 1 },
       }
     )
+  })
+
+  it('should handle bulk upload fiduciary business commissions successfully', async () => {
+    const store = useFiduciaryBusinessCommissionsV2()
+    const formData = new FormData()
+    formData.append('file', new Blob(['test'], { type: 'text/plain' }))
+    const cancelToken = axios.CancelToken.source().token
+
+    const mockResponse = {
+      success: true,
+      data: {
+        status: 'ok',
+        created_count: 1,
+      },
+      message: 'Archivo procesado con éxito.',
+    }
+
+    const mockPost = jest.fn().mockResolvedValue({
+      data: mockResponse,
+    })
+
+      ; (executeApi as jest.Mock).mockReturnValue({ post: mockPost })
+
+    const result = await store._bulkUploadFiduciaryBusinessCommissions(
+      formData,
+      cancelToken
+    )
+
+    expect(mockPost).toHaveBeenCalledWith(
+      `${URL_PATH_SETTLEMENT_COMMISSIONS}/v2/business-trust-commissions/bulk-upload`,
+      formData,
+      expect.objectContaining({
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        cancelToken,
+      })
+    )
+
+    expect(result).toEqual(mockResponse)
   })
 })

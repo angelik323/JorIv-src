@@ -59,7 +59,7 @@
                   validateRouter(
                     'Fics',
                     'InvestmentPlanParticipationModificationList',
-                    'edit'
+                    'action_authorize'
                   )
                 "
                 :outline="false"

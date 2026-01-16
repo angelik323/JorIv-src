@@ -35,6 +35,7 @@ const useImagesData = (props: {
     _deleteReportTemplateLogo,
     _deleteReportTemplateSignature,
     _updateReportTemplateLogo,
+    _updateReportTemplateSignature,
     _getShowReportTemplateLogo,
     _getShowReportTemplateSignature,
   } = useReportTemplatesStore('v2')
@@ -50,11 +51,11 @@ const useImagesData = (props: {
   const modelsReferenceImages = ref<{
     app_name?: string
     image_path?: string
-    user_id?: number
+    user_id?: number | null
   }>({
     app_name: '',
     image_path: '',
-    user_id: undefined,
+    user_id: null,
   })
 
   //UploadImage properties and methods
@@ -86,7 +87,7 @@ const useImagesData = (props: {
 
     const payloadSignature = {
       image_path: modelsReferenceImages.value.image_path,
-      user_id: modelsReferenceImages.value.user_id,
+      user_id: modelsReferenceImages?.value?.user_id ?? 0,
     }
 
     if (props.action === 'logo') {
@@ -102,7 +103,11 @@ const useImagesData = (props: {
     tablePropertiesSignature.value.rows =
       tablePropertiesSignature.value.rows.filter((row) => row.id !== fileId)
     attachDocumentRef.value?.removeFilesRemote()
-    await _deleteReportTemplateLogo(fileId)
+    if (props.action === 'logo') {
+      await _deleteReportTemplateLogo(fileId)
+      return
+    }
+    await _deleteReportTemplateSignature(fileId)
   }
 
   const rejectedFiles = (fileRejected: { failedPropValidation?: string }[]) => {
@@ -121,7 +126,7 @@ const useImagesData = (props: {
     if (props.action === 'logo') {
       await _updateReportTemplateLogo(id)
     } else {
-      await _deleteReportTemplateSignature(id)
+      await _updateReportTemplateSignature(id)
     }
   }
 
@@ -215,7 +220,10 @@ const useImagesData = (props: {
     () => report_template_logo_response.value,
     (newVal) => {
       if (!newVal) return
-      tablePropertiesLogo.value.rows = [newVal]
+      tablePropertiesLogo.value.rows = [
+        ...tablePropertiesLogo.value.rows,
+        newVal,
+      ]
     },
     { deep: true }
   )
@@ -224,7 +232,10 @@ const useImagesData = (props: {
     () => report_template_signature_response.value,
     (newVal) => {
       if (!newVal) return
-      tablePropertiesSignature.value.rows = [newVal]
+      tablePropertiesSignature.value.rows = [
+        ...tablePropertiesSignature.value.rows,
+        newVal,
+      ]
     },
     { deep: true }
   )

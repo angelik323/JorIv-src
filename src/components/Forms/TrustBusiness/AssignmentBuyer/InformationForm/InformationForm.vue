@@ -203,7 +203,7 @@
       <div class="col-12 col-xs-3 col-md-3" v-if="props.action !== 'create'">
         <div class="text-black-90">
           <p class="text-weight-bold no-margin">Estado</p>
-          <ShowStatus :type="Number(models.status_id)" />
+          <ShowStatus v-if="models.status_id" :type="Number(models.status_id)" />
         </div>
       </div>
     </div>

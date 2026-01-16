@@ -141,7 +141,13 @@
 
             <!-- Autorizar -->
             <Button
-              v-if="validateRouter('BusinessTrust', 'GuaranteesList', 'edit')"
+              v-if="
+                validateRouter(
+                  'BusinessTrust',
+                  'GuaranteesList',
+                  'action_authorize'
+                )
+              "
               :left-icon="defaultIconsLucide.circleCheckBig"
               color="orange"
               :class-custom="'custom'"

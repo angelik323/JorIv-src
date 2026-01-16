@@ -75,7 +75,7 @@ export default [
       requiredValidRole: {
         module: 'BusinessTrust',
         view: 'AssignmentBuyerList',
-        action: 'edit',
+        action: 'action_authorize',
       },
     },
     component: () =>

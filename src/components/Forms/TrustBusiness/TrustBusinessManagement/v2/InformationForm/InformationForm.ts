@@ -227,6 +227,21 @@ const useInformationForm = (
     }
   )
 
+  watch(
+    () => props.data,
+    () => {
+      _setValueModel()
+
+      if (isLoading.value) {
+        isLoading.value = false
+      }
+    },
+    {
+      deep: true,
+      immediate: true,
+    }
+  )
+
   const validateForm = async () => {
     const isValid =
       (await general_information_ref.value?.validateForm()) &&

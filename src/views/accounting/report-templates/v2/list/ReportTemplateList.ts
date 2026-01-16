@@ -98,24 +98,26 @@ const useReportTemplateList = () => {
       },
     ],
     rows: [],
-    pages: { currentPage: 1, lastPage: 1 },
+    pages: { currentPage: 0, lastPage: 0 },
   })
 
-  const listAction = async (filters: Record<string, string | number>) => {
+  const listAction = async () => {
     tableProperties.value.rows = []
     tableProperties.value.loading = true
 
-    const resp = await _getReportTemplate(filters)
-    if (!resp) {
+    const response = await _getReportTemplate(filtersFormat.value)
+
+    tableProperties.value.loading = false
+
+    if (!response) {
       tableProperties.value.pages = { currentPage: 0, lastPage: 0 }
       return
     }
 
-    tableProperties.value.loading = false
-    tableProperties.value.rows = [...resp?.data]
+    tableProperties.value.rows = [...response.data]
     tableProperties.value.pages = {
-      currentPage: resp?.current_page,
-      lastPage: resp?.last_page,
+      currentPage: response.current_page,
+      lastPage: response.last_page,
     }
   }
 
@@ -123,24 +125,26 @@ const useReportTemplateList = () => {
     tableProperties.value.rows = []
   }
 
-  const handleFilterSearch = async ($filters: { 'filter[search]': string }) => {
+  const handleFilterSearch = async (
+    $filters: Record<string, string | number>
+  ) => {
     filtersFormat.value = {
       ...$filters,
       page: 1,
       rows: filtersFormat.value.rows,
     }
-    await listAction(filtersFormat.value)
+    await listAction()
   }
   const updatePage = async (page: number) => {
     filtersFormat.value.page = page
-    await listAction(filtersFormat.value)
+    await listAction()
   }
 
   const updateRowsPerPage = async (rows: number) => {
     filtersFormat.value.page = 1
     filtersFormat.value.rows = rows
 
-    await listAction(filtersFormat.value)
+    await listAction()
   }
 
   const modifyStatus = async (id: number) => {
@@ -150,6 +154,7 @@ const useReportTemplateList = () => {
 
   const submitDataModify = async () => {
     await _updateReportTemplate(valueRowReference.value)
+    modalRef.value = false
   }
 
   return {

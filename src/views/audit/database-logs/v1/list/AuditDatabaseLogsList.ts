@@ -284,7 +284,7 @@ const useAuditDatabaseLogsList = () => {
     validateRouter('Audit', 'AuditDatabaseLogsList', 'export')
 
   const isEnabledEditAction = () =>
-    validateRouter('Audit', 'AuditDatabaseLogsList', 'edit')
+    validateRouter('Audit', 'AuditDatabaseLogsList', 'action_configure')
 
   const handleGoToList = () => goToURL(headerConfig.btn.route)
 

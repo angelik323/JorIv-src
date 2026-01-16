@@ -36,16 +36,19 @@ const useLocationsEdit = () => {
     id: id,
     created_by_name: String(route.query.created_by_name ?? ''),
     updated_by_name: String(route.query.updated_by_name ?? ''),
-    created_at: '',
+    created_at: String(route.query.created_at ?? ''),
     updated_at: String(route.query.updated_at ?? ''),
-    location_types: null,
+    location_types: String(route.query.location_types ?? ''),
     which: '',
-    locations: null,
+    locations: String(route.query.locations ?? ''),
     parent_location: null,
-    country: null,
-    department: null,
+    country: String(route.query.country ?? ''),
+    country_name: String(route.query.country_name ?? ''),
+    department_name: String(route.query.department_name ?? ''),
+    city_name: String(route.query.city_name ?? ''),
+    address: String(route.query.address ?? ''),
     city: null,
-    address: null,
+    department: null,
   }
 
   // configs
@@ -96,9 +99,9 @@ const useLocationsEdit = () => {
     if (!form.value) return null
 
     return {
-      type_location: form.value.location_types!,
+      type_location: Number(form.value.location_types!),
       custom_type_location: form.value.which ?? null,
-      location_parent_id: form.value.locations ?? null,
+      location_parent_id: Number(form.value.locations ?? null),
 
       country_id: form.value.country!,
       department_id: form.value.department!,

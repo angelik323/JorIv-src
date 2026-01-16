@@ -88,7 +88,7 @@
         </TableList>
       </section>
 
-      <section class="q-mt-md row justify-end items-center">
+      <section class="q-mt-md q-mb-md row justify-end items-center">
         <Button
           label="Actualizar"
           size="md"

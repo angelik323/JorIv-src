@@ -510,7 +510,10 @@ const useInformationForm = () => {
     () => accounting_parameters_movement_codes_list.value,
     () => {
       tablePropsAccountingBlock.value.rows = [
-        ...accounting_parameters_movement_codes_list.value,
+        ...accounting_parameters_movement_codes_list.value.map(row => ({
+          ...row,
+          disabled: !row.id
+        })),
       ]
     },
     { immediate: true, deep: true }

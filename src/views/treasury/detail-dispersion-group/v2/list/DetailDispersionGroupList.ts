@@ -53,6 +53,7 @@ const useDetailDispersionGroupList = () => {
   const selectedRowIdDetail = ref<number | null>()
   const selectedGroup = ref(false)
   const filtersRef = ref()
+  const NO_INFORMATION_STRING = 'Sin información'
 
   let perPage = 20
 
@@ -226,13 +227,6 @@ const useDetailDispersionGroupList = () => {
     wrapCells: true,
     columns: [
       {
-        name: 'checkbox_button',
-        align: 'center',
-        label: '',
-        field: () => null,
-        sortable: true,
-      },
-      {
         name: 'id',
         align: 'left',
         label: '#',
@@ -243,77 +237,79 @@ const useDetailDispersionGroupList = () => {
         name: 'authorized_document_type_id',
         align: 'left',
         label: 'Número',
-        field: (row) => row.record_expense_id || '-',
+        field: (row) => row.record_expense_id || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'business',
         align: 'left',
         label: 'Negocio',
-        field: 'business',
+        field: (row) => row.business || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'means_of_payment',
         align: 'left',
         label: 'Forma de pago',
-        field: 'means_of_payment',
+        field: (row) => row.means_of_payment || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'bank_name',
         align: 'left',
         label: 'Banco origen',
-        field: 'bank_name',
+        field: (row) => row.bank_name || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'bank_account_type',
         align: 'left',
         label: 'Tipo de cuenta origen',
-        field: (row) => row.bank_account_type || '-',
+        field: (row) => row.bank_account_type || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'bank_account',
         align: 'left',
         label: 'Cuenta bancaria origen',
-        field: (row) => `${row.bank_account} - ${row.bank_account_name}`,
+        field: (row) =>
+          `${row.bank_account} - ${row.bank_account_name}` ||
+          NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'fund',
         align: 'left',
         label: 'Fondo',
-        field: (row) => row.fund || '-',
+        field: (row) => row.fund || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'investment_plan',
         align: 'left',
         label: 'Plan de inversión',
-        field: (row) => row.investment_plan || '-',
+        field: (row) => row.investment_plan || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'payment_order',
         align: 'left',
         label: 'Orden de pago',
-        field: (row) => row.payment_order || '-',
+        field: (row) => row.payment_order || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'monetary_order',
         align: 'left',
         label: 'Orden monetaria',
-        field: (row) => row.monetary_order || '-',
+        field: (row) => row.monetary_order || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'validity',
         align: 'left',
         label: 'Vigencia',
-        field: (row) => row.validity || '-',
+        field: (row) => row.validity || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
@@ -328,56 +324,59 @@ const useDetailDispersionGroupList = () => {
         name: 'type_document',
         align: 'left',
         label: 'Tipo de documento',
-        field: (row) => row.type_document || '-',
+        field: (row) => row.type_document || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'third_party_name',
         align: 'left',
         label: 'Beneficiario',
-        field: (row) => row.third_party_name || '-',
+        field: (row) => row.third_party_name || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'beneficiary_bank_name',
         align: 'left',
         label: 'Banco destino',
-        field: (row) => row.beneficiary_bank_name || '-',
+        field: (row) => row.beneficiary_bank_name || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'beneficiary_bank_account_type',
         align: 'left',
         label: 'Tipo de cuenta destino',
-        field: 'beneficiary_bank_account_type',
+        field: (row) =>
+          row.beneficiary_bank_account_type || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'beneficiary_bank_account',
         align: 'left',
         label: 'Cuenta bancaria destino',
-        field: (row) => row.beneficiary_bank_account_number || '-',
+        field: (row) =>
+          row.beneficiary_bank_account_number || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'office',
         align: 'left',
         label: 'Oficina',
-        field: 'office',
+        field: (row) => row.office || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'value',
         align: 'left',
         label: 'Valor',
-        field: (row) => formatCurrencyString(row.value) || '-',
+        field: (row) =>
+          formatCurrencyString(row.value) || NO_INFORMATION_STRING,
         sortable: true,
       },
       {
         name: 'gmf',
         align: 'left',
         label: 'GMF',
-        field: (row) => row.gmf || '-',
+        field: (row) => row.gmf || NO_INFORMATION_STRING,
         sortable: true,
       },
     ],

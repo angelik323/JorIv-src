@@ -21,6 +21,7 @@ import {
   IAccountingConsolidationBasicData,
   IAccountingConsolidationListProcess,
   IAccountingConsolidationBusinessData,
+  IAccountingConsolidationViewData,
 } from '@/interfaces/customs/accounting/AccountingConsolidationV2'
 
 //Auxiliary functions
@@ -63,6 +64,7 @@ export const useAccountingConsolidationV2 = defineStore(
       consolidation_id_reference: null as number | string | null,
       business_list: [] as IAccountingConsolidationListProcess[],
       consolidation_response: {} as IAccountingConsolidationBasicData | null,
+      consolidation_view_data_list: {} as IAccountingConsolidationViewData,
       business_list_consolidate: [] as IAccountingConsolidationBusinessData[],
     }),
     actions: {
@@ -126,7 +128,6 @@ export const useAccountingConsolidationV2 = defineStore(
           .then((response) => {
             const { data, message, success } = response.data
             if (success) {
-              this.consolidation_response = data ?? {}
               return {
                 data,
                 message,
@@ -147,7 +148,7 @@ export const useAccountingConsolidationV2 = defineStore(
           })
       },
       async _getBusinessAccounting(
-        params: Record<string, string | number | boolean>
+        params: Record<string, string | number | boolean | null>
       ) {
         let respSuccess = false
         const queryString =
@@ -291,11 +292,11 @@ export const useAccountingConsolidationV2 = defineStore(
       },
       async _getFilterBusinessConsolidation(
         consolidationId: number | string | null,
-        params: Record<string, string | number>
+        params: Record<string, string | number | null>
       ) {
         await executeApi()
           .get(
-            `${URL_PATH_ACCOUNTING}/v2/consolidation-accounting/show-consolidation/${consolidationId}?`,
+            `${URL_PATH_ACCOUNTING}/v2/consolidation-accounting/show-consolidation/${consolidationId}`,
             {
               params: { ...params },
             }
@@ -303,7 +304,7 @@ export const useAccountingConsolidationV2 = defineStore(
           .then((response) => {
             const { data, message, success } = response.data
             if (success) {
-              this.business_list = data?.data ?? []
+              this.consolidation_view_data_list = data
             }
             return showAlert(
               message,

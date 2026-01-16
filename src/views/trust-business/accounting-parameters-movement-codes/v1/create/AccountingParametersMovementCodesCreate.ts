@@ -37,6 +37,7 @@ const useAccountingParametersMovementCodesCreate = () => {
   const {
     _createAccountingParametersMovementCodes,
     _createAccountingParametersMovementCodesParameters,
+    _getListAction,
   } = useAccountingParametersMovementCodesStore('v1')
 
   const { _getResources, _resetKeys } = useResourceManagerStore('v1')
@@ -172,6 +173,8 @@ const useAccountingParametersMovementCodesCreate = () => {
       const payload = makeDataRequest()
       const created = await _createAccountingParametersMovementCodes(payload)
       if (!created) return
+
+      await _getListAction()
 
       const payloadParameters = makeDataRequestParameters()
       if (payloadParameters.length > 0 && row_selected.value) {

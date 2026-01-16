@@ -7,6 +7,7 @@
       :breadcrumbs="headerConfig.breadcrumbs"
       :btn-label="headerConfig.btn.label"
       :btn-icon="headerConfig.btn.icon"
+      :btn-disable="!permissionEnable()"
       @to="goToURL(headerConfig.btn.route)"
     >
       <section class="q-mt-md">
@@ -92,5 +93,6 @@ const {
   handleClearFilters,
   handleFilterSearch,
   handleUpdateRowsPerPage,
+  permissionEnable,
 } = useAuditEntryOfFunctionalities()
 </script>

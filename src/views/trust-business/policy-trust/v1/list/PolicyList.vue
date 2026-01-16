@@ -150,7 +150,7 @@
                 validateRouter(
                   'BusinessTrust',
                   'PolicyList',
-                  'action_export_individual'
+                  'action_authorize'
                 )
               "
               :left-icon="defaultIconsLucide.circleCheckBig"

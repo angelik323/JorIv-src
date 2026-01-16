@@ -87,6 +87,7 @@ const initialState = () => ({
   orpa_compliance_statuses: [] as IGenericResource[],
   tax_settlement_person_types: [] as ISelectorResources[],
   payment_request: [] as ISelectorResources[],
+  tax_settlement_statuses: [] as IGenericResource[],
 })
 
 export const useAccountsPayableResourcesV1 = defineStore(
@@ -517,6 +518,20 @@ export const useAccountsPayableResourcesV1 = defineStore(
           })) ?? []
       },
 
+      assignTaxSettlementStatuses(tax_settlement_statuses: []) {
+        const mapped =
+          tax_settlement_statuses.map((item: ISelectorResources) => ({
+            ...item,
+            value: item.value ?? item.id ?? '',
+            label: item.label ?? item.name ?? '',
+          })) ?? []
+
+        this.tax_settlement_statuses = [
+          { label: 'Todos', value: '' } as ISelectorResources,
+          ...mapped,
+        ]
+      },
+
       async getResources(params: string) {
         const customHandlers: Record<
           string,
@@ -571,6 +586,7 @@ export const useAccountsPayableResourcesV1 = defineStore(
           cancellation_rejection_reasons:
             this.assignCancellationRejectionReasons,
           tax_settlement_person_types: this.assignTaxSettlementPersonTypes,
+          tax_settlement_statuses: this.assignTaxSettlementStatuses,
         }
 
         await executeApi()

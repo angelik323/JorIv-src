@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { executeApi } from '@/apis'
+import axios, { CancelToken } from 'axios'
 
 // Interfaces
 import { IErrors } from '@/interfaces/global'
@@ -11,7 +12,7 @@ import {
 import { IPaginated } from '@/interfaces/customs'
 
 // Composables
-import { useAlert, useShowError } from '@/composables'
+import { useAlert, useShowError, useUtils } from '@/composables'
 
 // Constants
 import { URL_PATH_SETTLEMENT_COMMISSIONS } from '@/constants/apis'
@@ -160,6 +161,66 @@ export const useFiduciaryBusinessCommissionsV2 = defineStore(
 
         return success
       },
+
+      async _getFormatExcel() {
+        await executeApi()
+          .get(`${URL_PATH_SETTLEMENT_COMMISSIONS}/v2/business-trust-commissions/excel/template`, {
+            responseType: 'blob',
+          })
+          .then((response) => {
+            const blob = new Blob([response.data], {
+              type: response.headers['content-type'],
+            })
+
+            const name = useUtils().getNameBlob(response)
+            useUtils().downloadBlobXlxx(blob, name)
+          })
+          .catch((error) => {
+            showAlert(showCatchError(error), 'error', undefined, TIMEOUT_ALERT)
+          })
+      },
+
+      async _bulkUploadFiduciaryBusinessCommissions(formData: FormData, cancelToken: CancelToken) {
+        return await executeApi()
+          .post(
+            `${URL_PATH_SETTLEMENT_COMMISSIONS}/v2/business-trust-commissions/bulk-upload`,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+              cancelToken
+            }
+          )
+          .then((response) => {
+            return response.data
+          })
+          .catch((e) => {
+            if (axios.isCancel(e)) return null;
+
+            const error = e as IErrors
+            const message = error?.response?.data?.message ?? showCatchError(error)
+
+            showAlert(message, 'error', undefined, TIMEOUT_ALERT)
+
+            throw e;
+          })
+      },
+
+      async _exportErrorFile(nameFile: string) {
+        return await executeApi()
+          .get(`${URL_PATH_SETTLEMENT_COMMISSIONS}/v2/business-trust-commissions/download-file`, {
+            params: {
+              path: nameFile
+            },
+            responseType: 'blob',
+          })
+          .then((response) => response.data)
+          .catch((error) => {
+            showAlert(showCatchError(error), 'error', undefined, TIMEOUT_ALERT)
+          })
+      }
     },
   }
 )
+

@@ -18,10 +18,10 @@
         />
         <div class="q-pa-lg">
           <InformationForm
+            ref="informationFormRef"
             :section="tabActive"
             :action="'create'"
             @update:data="basic_data_form = $event"
-            ref="informationFormRef"
           />
           <section
             class="q-mt-lg"

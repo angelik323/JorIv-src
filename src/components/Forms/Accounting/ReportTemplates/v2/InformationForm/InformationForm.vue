@@ -49,7 +49,7 @@
                 placeholder="Ingrese el nombre"
                 max_length="80"
                 label="Nombre encabezado 1"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'El nombre es requerido'),
               (val: string) =>
@@ -83,7 +83,7 @@
                 map_options
                 :manual_option="report_template_logos"
                 label="Nombre logo"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'El nombre del logo es requerido'),
           
@@ -113,7 +113,7 @@
                 map_options
                 :manual_option="report_template_logos"
                 label="Nombre logo"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'El nombre del logo es requerido'),
             ]"
@@ -205,7 +205,7 @@
                 placeholder="Ingrese la nota"
                 max_length="80"
                 label="Nota"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'La nota es requerida'),
             
@@ -231,7 +231,7 @@
                 placeholder="Ingrese la nota"
                 max_length="80"
                 label="Nota 2"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'La nota es requerida'),
               (val: string) =>
@@ -261,7 +261,7 @@
                 placeholder="Ingrese la nota"
                 max_length="80"
                 label="Nota 3"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'La nota es requerida'),
             ]"
@@ -399,7 +399,7 @@
                 placeholder="Ingrese"
                 max_length="10"
                 label="Tarjeta profesional"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'La tarjeta profesional es requerido'),
               (val: string) =>
@@ -442,7 +442,7 @@
                 placeholder="Ingrese"
                 max_length="60"
                 label="Leyenda"
-                required
+                :required="false"
                 :rules="[
               (val: string) => useRules().is_required(val, 'La leyenda es requerida'),
                 (val: string) =>
@@ -461,7 +461,7 @@
               :class-custom="'custom'"
               :outline="true"
               :flat="false"
-              size=""
+              :disabled="!modelsSignatures.manage_signature"
               label="Agregar otra firma"
               @click="loadSignaturePartial"
             />
@@ -484,6 +484,7 @@
                   :flat="true"
                   colorIcon="#f45100"
                   tooltip="Ver"
+                  @click="getFullSignatureById(row.id)"
                 />
                 <Button
                   :right-icon="defaultIconsLucide.edit"
@@ -576,13 +577,14 @@ import TableList from '@/components/table-list/TableList.vue'
 
 //Interfaces
 import { IReportTemplatePayload } from '@/interfaces/customs/accounting/ReportTemplates'
+import { ActionType } from '@/interfaces/global/Action'
+import { ReportTemplateActions } from '@/interfaces/global/Action'
 
 //Composables
 import { useRules } from '@/composables/useRules'
 
 //Logic view
 import useInformationForm from '@/components/Forms/Accounting/ReportTemplates/v2/InformationForm/InformationForm'
-import { ActionType, ReportTemplateActions } from '@/interfaces/global'
 
 const props = defineProps<{
   action: ActionType
@@ -602,6 +604,7 @@ const {
   tablePropertiesSignatures,
   loadSignaturePartial,
   deleteSignaturePartial,
+  getFullSignatureById,
 
   //Others
   selectedRows,

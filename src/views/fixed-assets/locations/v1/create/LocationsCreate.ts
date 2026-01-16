@@ -75,9 +75,9 @@ const useLocationsCreate = () => {
     if (!form.value) return null
 
     return {
-      type_location: form.value.location_types!,
+      type_location: Number(form.value.location_types!),
       custom_type_location: form.value.which ?? null,
-      location_parent_id: form.value.locations ?? null,
+      location_parent_id: Number(form.value.locations ?? null),
 
       country_id: form.value.country!,
       department_id: form.value.department!,

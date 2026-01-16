@@ -17,6 +17,33 @@
       :btn-icon="defaultIconsLucide.plusCircleOutline"
       @to="goToURL('FiduciaryBusinessCommissionsCreate')"
     >
+
+      <template #addBefore>
+        <Button
+          outline
+          :label="validateRouter(
+            'SettlementCommissions',
+            'BusinessTrustCommissionsList',
+            'create'
+          )
+            ? 'Carga comisiones'
+            : undefined
+          "
+          class-custom="custom"
+          :styleContent="{
+            'place-items': 'center',
+            'border-radius': '20px',
+            'height': '40px',
+            'font-size': '14px',
+            'color': 'black',
+            'padding': '0 20px',
+          }"
+          @click="
+            goToURL('FiduciaryBusinessCommissionsImport')
+          "
+        />
+      </template>
+
       <section class="q-mt-md">
         <FiltersComponentV2
           :fields="filterConfig"

@@ -226,11 +226,19 @@ const usePaymentMilestonesModificationList = () => {
         required: false,
         label: 'Contratista',
         align: 'center',
-        field: (row) =>
-          row.contractor?.business_name ||
-          row.contractor?.name ||
-          row.contractor?.document ||
-          '-',
+        field: (row) => {
+          const contractor = Array.isArray(row.contractor)
+            ? row.contractor[0]
+            : row.contractor
+
+          if (!contractor) return '-'
+
+          const name = contractor.name || ''
+          const document = contractor.document || ''
+
+          if (document && name) return `${document} - ${name}`
+          return document || name || '-'
+        },
         sortable: false,
       },
       {

@@ -62,7 +62,7 @@ export default [
       requiresValidRole: {
         module: 'Fics',
         view: 'GenericInvestmentPlansList',
-        action: 'create',
+        action: 'action_legalize',
       },
     },
   },
@@ -79,7 +79,7 @@ export default [
       requiredValidRole: {
         module: 'Fics',
         view: 'GenericInvestmentPlansList',
-        action: 'edit',
+        action: 'action_annul',
       },
     },
   },

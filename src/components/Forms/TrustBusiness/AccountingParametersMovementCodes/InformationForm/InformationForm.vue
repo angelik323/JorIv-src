@@ -18,6 +18,7 @@
             :hideHeader="false"
             :hideBottom="true"
             selection="single"
+            :canDisableSelection="true"
             @selected="handleSelected"
           >
             <template #custom-header>

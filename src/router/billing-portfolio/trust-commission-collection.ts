@@ -28,7 +28,7 @@ export default [
       requiredValidRole: {
         module: 'BillingCollection',
         view: 'CollectionTrustCommissionList',
-        action: 'create',
+        action: 'action_generate',
       },
     },
   },

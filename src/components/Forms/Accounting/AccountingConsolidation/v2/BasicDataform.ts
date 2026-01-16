@@ -1,5 +1,6 @@
 // Vue - Pinia
 import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 
 // Interfaces
@@ -43,9 +44,11 @@ const useBasicDataForm = (props: {
     _getFilterBusinessConsolidation,
     _getDetailConsolidation,
   } = useAccountingConsolidationStore('v2')
-  const { business_list, business_list_consolidate } = storeToRefs(
-    useAccountingConsolidationStore('v2')
-  )
+  const {
+    business_list,
+    business_list_consolidate,
+    consolidation_view_data_list,
+  } = storeToRefs(useAccountingConsolidationStore('v2'))
   const {
     business_trusts_to_consolidate,
     account_chart_structure_accounting,
@@ -53,18 +56,33 @@ const useBasicDataForm = (props: {
   } = storeToRefs(useAccountingResourceStore('v1'))
 
   // Utils & Refs
+
   const { openMainLoader } = useMainLoader()
   const { goToURL } = useGoToUrl()
   const validateRef = ref(false)
   const hideFilters = ref<boolean>(true)
+  const route = useRoute()
   const disabledBtnDownload = ref<boolean | null>(null)
   const disabledBtn = ref<boolean>(false)
   const structureRefByTable = ref<string>('')
+  const businessId = ref<number | null>(null)
   const visibleBtn = ref<boolean>(true)
   const selectedIdConsolidationView = ref<number | string>('')
-  const consolidationIdReferenceView = ref<number | string | null>(null)
+  const consolidationIdReferenceView = ref<IAccountingConsolidationViewRow>({
+    id: 0,
+    accounting_structure: '',
+    last_update_date: '',
+    status: {
+      id: 0,
+      status: '',
+    },
+    news: '',
+  })
+
+  const disabledBtnsViewExcel = ref<boolean>(false)
+  const disabledBtnsViewExcelNovelty = ref<boolean>(false)
   const consolidationId = ref<number | string | null>(null)
-  const consolidationHeaderId = ref<number | null | string>(null)
+  const consolidationHeaderId = ref<number | null | string>('')
 
   const initialFiltersData: IAccountingConsolidationViewData = {
     id: 0,
@@ -131,6 +149,8 @@ const useBasicDataForm = (props: {
     consolidation_header: {
       id: 0,
       process_code: '',
+      date_last_consolidation: '',
+      current_period: '',
       status: {
         id: 0,
         status: '',
@@ -285,7 +305,7 @@ const useBasicDataForm = (props: {
         required: false,
         label: 'Tipo de cierre',
         align: 'left',
-        field: 'period_closing',
+        field: (row) => row.period_closing,
         sortable: true,
       },
       {
@@ -365,6 +385,22 @@ const useBasicDataForm = (props: {
         field: (row) => row.status?.status ?? '',
         sortable: true,
       },
+      {
+        name: 'news',
+        required: false,
+        label: 'Novedades',
+        align: 'left',
+        field: (row) => row.news,
+        sortable: true,
+      },
+      {
+        name: 'actions',
+        required: false,
+        label: 'Acciones',
+        align: 'left',
+        field: 'id',
+        sortable: true,
+      },
     ],
     rows: [],
     pages: { currentPage: 0, lastPage: 0 },
@@ -414,7 +450,7 @@ const useBasicDataForm = (props: {
         required: false,
         label: 'Fecha de última consolidación',
         align: 'left',
-        field: (row) => row.consolidation_header.process_code,
+        field: (row) => row.consolidation_header.date_last_consolidation,
         sortable: true,
       },
       {
@@ -526,6 +562,13 @@ const useBasicDataForm = (props: {
   })
 
   //Filter components and ref properties
+  const filterFunctionBusiness = (code: string | number) => {
+    const BusinessId = business_trusts_to_consolidate.value.find(
+      (item) => item.value === code
+    )?.id
+    businessId.value = BusinessId ?? null
+  }
+
   const filterComponentRef = ref()
 
   const filterBasicDataConfig = ref<IFieldFilters[]>([
@@ -540,6 +583,7 @@ const useBasicDataForm = (props: {
       class: 'col-12 col-md-4',
       placeholder: 'Seleccione',
       clean_value: true,
+      onChange: (val: string | number) => filterFunctionBusiness(val),
     },
     {
       type: 'q-date',
@@ -559,7 +603,7 @@ const useBasicDataForm = (props: {
       value: null,
       class: 'col-12 col-md-4',
       options: consolidate_status,
-      disable: false,
+      disable: !visibleBtn,
       autocomplete: true,
       clean_value: true,
       placeholder: 'Seleccione',
@@ -578,10 +622,11 @@ const useBasicDataForm = (props: {
       class: 'col-12 col-md-4',
       placeholder: 'Seleccione',
       clean_value: true,
+      onChange: (val: string | number) => filterFunctionBusiness(val),
     },
     {
       type: 'q-select',
-      name: 'search',
+      name: 'child_business_id',
       label: 'Negocio consolidado',
       options: business_trusts_to_consolidate,
       value: null,
@@ -621,31 +666,28 @@ const useBasicDataForm = (props: {
     {
       page: number
       rows: number
-    } & Record<string, string | number>
+    } & Record<string, string | number | null>
   >({
     page: 1,
     rows: 20,
   })
 
-  const filtersFormatCustom = ref<Record<string, string | number>>({})
+  const filtersFormatCustom = ref<
+    Record<string, string | number | boolean | null>
+  >({})
 
   const handleFilterSearch = async ($filter: Record<string, string>) => {
-    delete $filter['filter[date_last_consolidate]']
+    delete $filter['filter[business_id]']
     filtersFormatCustom.value = {
+      ...filterParams.value,
       ...$filter,
+      'filter[business_id]': businessId.value,
     }
-    delete filtersFormatCustom.value['filter[date_last_consolidate]']
-    await _getFilterBusinessConsolidation(
-      consolidationHeaderId.value,
-      filtersFormatCustom.value
-    )
+    await _getBusinessAccounting(filtersFormatCustom.value)
   }
 
-  const handleFilterSearchView = async ($filters: {
-    'filter[last_consolidation_date]': string
-    'filter[consolidation_status_id]': string
-    'filter[business_id]': string
-  }) => {
+  const handleFilterSearchView = async ($filters: Record<string, string>) => {
+    delete $filters['filter[business_id]']
     filtersFormat.value = {
       ...$filters,
       page: 1,
@@ -666,10 +708,15 @@ const useBasicDataForm = (props: {
       date_to_consolidate: date_last_consolidation || '',
       from_consolidation_business_code: from_business?.code || '',
       to_consolidation_business_code: to_business?.code || '',
+      'filter[business_id]': businessId.value,
       page: 1,
       rows: filtersFormat.value.rows,
     }
-    await _getBusinessAccounting(filtersFormat.value)
+
+    await _getFilterBusinessConsolidation(
+      route.params.id.toString(),
+      filtersFormat.value
+    )
   }
 
   const handleClear = () => {
@@ -726,6 +773,9 @@ const useBasicDataForm = (props: {
   )
 
   const initialSearchAction = async () => {
+    tableConsolidationAccounting.value.rows = []
+    tableBusinessesConsolidating.value.rows = []
+    visibleBtn.value = true
     openMainLoader(true)
     const resp = await _getBusinessAccounting(filterParams.value)
     if (resp) filterAndTableRef.value = true
@@ -762,6 +812,7 @@ const useBasicDataForm = (props: {
     preFilterData.value = props.data as IAccountingConsolidationViewData
     tableDetailAccounting.value.rows = [modelsDetail.value]
     tableDetailAccountingShort.value.rows = modelsDetail.value.executions
+    consolidationId.value = models.value.id
 
     tableViewConsolidatedAccounting.value.rows = (
       models.value.parent_business_consolidations || []
@@ -779,14 +830,18 @@ const useBasicDataForm = (props: {
     }))
   }
   const downloadExcelFile = async () => {
-    await _getDownloadFile(
-      consolidationHeaderId.value === null
-        ? ''
-        : consolidationHeaderId.value.toString()
-    )
+    if (props.data) {
+      await _getDownloadFile(String(models.value.id))
+      return
+    }
+    await _getDownloadFile(String(consolidationHeaderId.value))
   }
 
   const downloadDetailsExcelFile = async () => {
+    if (props.data) {
+      await _getDownloadDetailsFile(String(models.value.id))
+      return
+    }
     await _getDownloadDetailsFile(consolidationHeaderId.value ?? '')
   }
 
@@ -799,7 +854,7 @@ const useBasicDataForm = (props: {
   watch(
     () => props.data,
     (val) => {
-      if (!val) return
+      if (!val || Object.keys(val).length === 0) return
 
       _setValueModel()
     },
@@ -827,6 +882,7 @@ const useBasicDataForm = (props: {
           status: item.last_consolidation?.status ?? { status: '' },
         },
       }))
+
       structureRefByTable.value =
         val[0]?.account_structure_relation.account_structure.concat
     },
@@ -872,6 +928,7 @@ const useBasicDataForm = (props: {
             business_consolidated: item.business_consolidated ?? '',
             accounting_structure: item.accounting_structure ?? '',
             close_period: item.close_period ?? '',
+            period_closing: item.period_closing ?? '',
             current_period: item.current_period ?? '',
             consolidation_header,
             concat: item.concat ?? '',
@@ -958,7 +1015,11 @@ const useBasicDataForm = (props: {
     async (newVal) => {
       selectedIdConsolidationView.value =
         models.value.parent_business_consolidations[0]?.business.consolidation.id
-      if (!newVal) return
+      disabledBtnsViewExcel.value =
+        newVal.status?.status === 'Exitoso' ? true : false
+      disabledBtnsViewExcelNovelty.value =
+        newVal.status?.status === 'Con novedades' ? true : false
+
       const resp = await _getDetailConsolidation(
         selectedIdConsolidationView.value
       )
@@ -967,6 +1028,29 @@ const useBasicDataForm = (props: {
       } else [(tableViewDataChildren.value.rows = [])]
     }
   )
+
+  watch(
+    () => consolidation_view_data_list.value,
+    (newVal) => {
+      if (!newVal) return
+      tableViewConsolidatedAccounting.value.rows = (
+        newVal?.parent_business_consolidations || []
+      ).map((item) => ({
+        id: item.business?.id,
+        consolidation_business_code: item.business?.code,
+        accounting_structure: item.business?.account?.description,
+        number_business_of_consolidated:
+          item.business?.quantity_children_business,
+        status: item.business?.consolidation?.status,
+        concat: item.business?.concat,
+        quantity_children_business: item.business?.quantity_children_business,
+        news: item.business?.consolidation?.details_novelties,
+        last_update_date: item.business?.consolidation?.last_date_consolidate,
+      }))
+    },
+    { deep: true }
+  )
+
   return {
     validateRef,
     tableBusinessesConsolidating,
@@ -994,6 +1078,8 @@ const useBasicDataForm = (props: {
     tableViewDataChildren,
     consolidationIdReferenceView,
     modifyManualOptions,
+    disabledBtnsViewExcel,
+    disabledBtnsViewExcelNovelty,
     handleFilterSearchView,
     obSubmitConsolidate,
     downloadExcelFile,

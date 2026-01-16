@@ -244,14 +244,26 @@ const useInformationForm = (
   }
 
   const loadSignaturePartial = () => {
-    models.value.signatures = [{ ...modelsSignatures.value }]
-    tablePropertiesSignatures.value.rows = [
-      {
-        id: tablePropertiesSignatures.value.rows.length + 1,
-        name: modelsSignatures.value.signature_type,
-        position: modelsSignatures.value.responsible_type,
-      },
-    ]
+    if (!Array.isArray(models.value.signatures)) {
+      models.value.signatures = []
+    }
+
+    const index = tablePropertiesSignatures.value.rows.length + 1
+
+    models.value.signatures.push({
+      index,
+      ...modelsSignatures.value,
+    })
+
+    tablePropertiesSignatures.value.rows.push({
+      id: index,
+      name: modelsSignatures.value.signature_type,
+      position: modelsSignatures.value.responsible_type,
+    })
+  }
+
+  const getFullSignatureById = (id: number) => {
+    return models.value.signatures.find((signature) => signature.index === id)
   }
 
   const deleteSignaturePartial = (idRow: number) => {
@@ -380,6 +392,7 @@ const useInformationForm = (
     defaultIconsLucide,
     loadSignaturePartial,
     deleteSignaturePartial,
+    getFullSignatureById,
   }
 }
 

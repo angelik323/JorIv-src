@@ -18,14 +18,16 @@ export default [
     path: '/auditoria/log-base-de-datos/configurar',
     name: 'AuditDatabaseLogsEdit',
     component: () =>
-      import('@/views/audit/database-logs/v1/configure/AuditDatabaseLogsEdit.vue'),
+      import(
+        '@/views/audit/database-logs/v1/configure/AuditDatabaseLogsEdit.vue'
+      ),
     meta: {
       requiresAuth: true,
       requiresFirstPasswordChanged: true,
       requiredValidRole: {
         module: 'Audit',
         view: 'AuditDatabaseLogsList',
-        action: 'edit',
+        action: 'action_configure',
       },
     },
   },

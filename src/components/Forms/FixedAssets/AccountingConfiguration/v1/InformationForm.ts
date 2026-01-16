@@ -143,7 +143,7 @@ const useInformationForm = (
     models.value.business_description = data?.business_trust?.name ?? ''
     models.value.configuration_subtype_code = data.configuration_subtype?.code
     models.value.account_structures_description =
-      data?.business_accouting_structure?.purpose ?? 'N/A'
+      data?.business_accouting_structure?.purpose ?? null
     models.value.receipt_type_description =
       data?.receipt_type?.code + ' - ' + data?.receipt_type?.name
     models.value.receipt_subtype_description =
@@ -155,7 +155,7 @@ const useInformationForm = (
     models.value.cost_centers_structures_description =
       structureNAme && structureDescription
         ? `${structureNAme} - ${structureDescription}`
-        : structureNAme || structureDescription || 'N/A'
+        : structureNAme || structureDescription || null
   }
 
   const handlerActionForm = (action: ActionType) => {

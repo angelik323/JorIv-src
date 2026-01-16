@@ -55,7 +55,7 @@
 
           <template #actions="{ row }">
             <Button
-              v-if="validateRouter('Accounting', 'ReportTemplatesList', 'view')"
+              v-if="validateRouter('Accounting', 'ReportTemplatesList', 'show')"
               :right-icon="defaultIconsLucide.eye"
               color="orange"
               :class-custom="'custom'"

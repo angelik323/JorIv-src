@@ -22,6 +22,7 @@ import { useBudgetResourceStore } from '@/stores/resources-manager/budget'
 import { useAccountsPayableResourceStore } from '@/stores/resources-manager/accounts-payable'
 import { useTrustBusinessResourceStore } from '@/stores/resources-manager/trust-business'
 import { useDerivativeContractingResourceStore } from '@/stores/resources-manager/derivative-contracting'
+import { useAssetResourceStore } from '@/stores/resources-manager/assets'
 import { usePaymentRequestsStore } from '@/stores/accounts-payable/payment-requests'
 
 const useMainInformationForm = (
@@ -64,6 +65,7 @@ const useMainInformationForm = (
   const { business_id, business_label, has_budget } = storeToRefs(
     usePaymentRequestsStore('v1')
   )
+  const { cities } = storeToRefs(useAssetResourceStore('v1'))
 
   // refs
   const keysBusinessTrust = {
@@ -306,6 +308,7 @@ const useMainInformationForm = (
     budget_document_transfer_type,
     budget_document_number,
     budget_document_validities_by_business,
+    cities,
 
     // methods
     changeBusiness,

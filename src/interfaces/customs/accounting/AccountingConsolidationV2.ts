@@ -287,6 +287,8 @@ export interface IAccountingConsolidationDetailData {
   consolidation_header: {
     id: number
     process_code: string
+    date_last_consolidation: string
+    current_period: string
     status: {
       id: number
       status: string

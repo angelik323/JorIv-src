@@ -397,7 +397,7 @@ const useContractRegistrationCreate = () => {
     await Promise.all([
       _getResources(
         { trust_business: ['business_trusts'] },
-        'filter[status_id]=57&filter[business_type_id]=1'
+        'filter[status_id]=57&filter[business_type_id]=1&filter[derivate_contracting]=1'
       ),
       _getResources(
         { third_party: ['third_parties'] },

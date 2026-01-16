@@ -790,7 +790,7 @@ const useAssociatedBudgetForm = (
         const newCommittedBalance = String(documentCommittedBalance)
         const newAvailableBalance = (
           Number(document.value_document || 0) -
-          Number(documentCommittedBalance) * Number(models.value.trm_value_raw ?? 1)
+          Number(documentCommittedBalance)
         )?.toString()
 
         if (document.committed_balance !== newCommittedBalance) {
@@ -804,7 +804,6 @@ const useAssociatedBudgetForm = (
       tablePropertiesAssociatedBudget.value.rows =
         val as IContractRegistrationAssociatedBudget[]
 
-
       const total_available_balance =
         tablePropertiesAssociatedBudget.value.rows?.reduce(
           (acc, item) => acc + (Number(item.available_balance) || 0),
@@ -813,15 +812,13 @@ const useAssociatedBudgetForm = (
 
       const total_committed_balance = val?.reduce((acc, item) => {
         return acc + calculateCommittedBalance(item.operation_log_details)
-      }, 0) * Number(models.value.trm_value_raw ?? 1)
+      }, 0)
 
       models.value.total_available_balance = total_available_balance?.toString()
       models.value.total_committed_balance = total_committed_balance?.toString()
-      
-      models.value.total_outstanding_balance = (
-        Number(models.value.contract_value || 0) - Number(total_committed_balance || 0)
+      models.value.total_outstanding_balance = Math.abs(
+        Number(total_available_balance) - Number(total_committed_balance)
       ).toString()
-
     },
     { immediate: true, deep: true }
   )

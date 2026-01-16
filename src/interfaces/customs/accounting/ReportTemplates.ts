@@ -129,6 +129,7 @@ export interface IReportTemplateModifyLogoAndSignature {
 }
 
 export interface IReportSignatures {
+  index?: number | string | null
   manage_signature: boolean
   responsible_type: string
   report_signature_id: number

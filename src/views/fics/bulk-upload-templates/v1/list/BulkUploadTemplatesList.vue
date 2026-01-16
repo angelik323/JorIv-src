@@ -16,8 +16,7 @@
         :fields="filterConfig"
         @clear-filters="handlerClear"
       />
-
-      <NoDataState type="empty" v-if="tableProps.rows.length === 0" />
+      <NoDataState v-if="isTableEmpty" :type="'empty'" />
 
       <section class="q-mt-xl" v-else>
         <TableList
@@ -93,5 +92,6 @@ const {
   handleGoToCreate,
   headerBreadcrumbs,
   defaultIconsLucide,
+  isTableEmpty,
 } = BulkUploadTemplatesList()
 </script>

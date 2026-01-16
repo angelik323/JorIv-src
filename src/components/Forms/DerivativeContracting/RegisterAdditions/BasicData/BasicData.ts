@@ -152,6 +152,7 @@ const useBasicDataForm = (
         models.value.subscription_date = today
         models.value.application_start_date = today
         models.value.contract_end_date = today
+        models.value.business_trust_id = val?.business_trusts_id
       }
     }
   )

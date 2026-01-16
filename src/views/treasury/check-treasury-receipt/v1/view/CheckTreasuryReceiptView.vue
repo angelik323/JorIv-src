@@ -203,13 +203,13 @@
                 </p>
                 <p class="text-weight-medium mb-0">
                   {{
-                    data_information_form?.general_information.account
-                      .account_number
+                    data_information_form?.beneficiary_information
+                      ?.beneficiary_account?.account_name
                   }}
                   -
                   {{
-                    data_information_form?.general_information.account
-                      .account_name
+                    data_information_form?.beneficiary_information
+                      ?.beneficiary_account?.account_number
                   }}
                 </p>
               </div>
@@ -298,8 +298,13 @@
                 </p>
                 <p class="text-weight-medium mb-0">
                   {{
-                    data_information_form?.registry_information.check_bank ||
-                    '-'
+                    data_information_form?.registry_information?.check_bank
+                      ?.bank_code
+                  }}
+                  -
+                  {{
+                    data_information_form?.registry_information?.check_bank
+                      ?.description
                   }}
                 </p>
               </div>

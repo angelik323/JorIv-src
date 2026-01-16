@@ -107,7 +107,7 @@
 
       <div v-if="props.action === 'view'" class="text-black-90">
         <p class="text-weight-bold no-margin">Estado del proyecto</p>
-        <ShowStatus :type="Number(models.status_id ?? 1)" />
+        <ShowStatus v-if="models.status_id" :type="Number(models.status_id)" />
       </div>
     </div>
 

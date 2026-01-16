@@ -185,13 +185,15 @@
         </div>
 
         <div class="col-12 col-md-3">
-          <GenericInputComponent
+          <GenericSelectorComponent
             label="Ciudad"
-            type="text"
-            :default_value="models.city_label"
+            :default_value="models.city_id"
+            :manual_option="cities"
+            :auto_complete="true"
             :required="true"
-            :disabled="true"
-            placeholder="-"
+            :map_options="true"
+            :rules="[(val: string) =>  is_required(val, 'La ciudad es requerida')]"
+            @update:model-value="models.city_id = $event"
           />
         </div>
 
@@ -350,6 +352,7 @@ const {
   contract_payment_milestones,
   budget_document_number,
   budget_document_transfer_type,
+  cities,
 
   // methods
   changeBusiness,

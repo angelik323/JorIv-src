@@ -3,6 +3,8 @@ import { storeToRefs } from 'pinia'
 import { useAlert } from '@/composables/useAlert'
 import { useGoToUrl } from '@/composables/useGoToUrl'
 
+import { PermissionsApp } from '@/interfaces/global/Action'
+
 export const useRouteValidator = () => {
   const { goToURL } = useGoToUrl()
   const { showAlert } = useAlert()
@@ -10,35 +12,7 @@ export const useRouteValidator = () => {
   const validateRouter = (
     key_menu: string,
     identifier_submenu: string,
-    action:
-      | 'list'
-      | 'view'
-      | 'edit'
-      | 'delete'
-      | 'undo'
-      | 'export'
-      | 'import'
-      | 'show'
-      | 'action_generate'
-      | 'process'
-      | 'action_outdated'
-      | 'action_export_individual'
-      | 'action_export_errors'
-      | 'action_authorize'
-      | 'export_individual'
-      | 'action_import'
-      | 'action_reject'
-      | 'action_change_status'
-      | 'action_annul'
-      | 'action_update'
-      | 'action_legalize'
-      | 'validate'
-      | 'action_give_permissions'
-      | 'action_remove_permissions'
-      | 'action_transfer_permissions'
-      | 'action_program'
-      | 'action_homologate'
-      | 'create' = 'list'
+    action: PermissionsApp = 'list'
   ): boolean => {
     const { menus } = storeToRefs(useLogin())
 

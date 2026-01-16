@@ -87,14 +87,14 @@ export interface ILocationsCreateForm {
   updated_by_name?: string | null
   updated_at?: string | null
   created_at?: string | null
-  location_types: number | null
-  locations: number | null
+  location_types: string | null
+  locations: string | null
   parent_location: number | null
   which?: string | null
   city: string | null
   address: string | null
   department: string | null
-  country: string | null
+  country?: string | null
   country_name?: string | null
   department_name?: string | null
   city_name?: string | null

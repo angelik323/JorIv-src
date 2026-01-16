@@ -214,3 +214,29 @@ export interface IFiduciaryBusinessCommissionsToEditV2 {
   observation?: string | null
   third_party_billings_id: number | null
 }
+
+export interface IFiduciaryBusinessCommissionsFileItem {
+  id: number
+  name: string
+  total: number
+  status: 'LOADING' | 'SUCCESS' | 'ERROR'
+}
+
+export interface IFiduciaryBusinessCommissionsFileResponse {
+  success: boolean,
+  message: string,
+  data: {
+    status: string
+    error_file_url: string
+    error_file_id: number
+    error_filename: string,
+  }
+}
+
+export interface IFiduciaryBusinessCommissionsFileResponseError {
+  message: string
+  success: boolean
+  response: {
+    data: IFiduciaryBusinessCommissionsFileResponse
+  }
+}

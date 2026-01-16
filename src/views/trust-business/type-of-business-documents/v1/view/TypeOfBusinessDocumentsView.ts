@@ -26,7 +26,7 @@ const useTypeOfBusinessDocumentsView = () => {
 
   const headerProperties = {
     ...headerPropsDefault.value,
-    title: 'Ver tipos de documentos',
+    title: 'Ver tipo de documento negocio',
     breadcrumbs: [
       ...headerPropsDefault.value.breadcrumbs,
       {

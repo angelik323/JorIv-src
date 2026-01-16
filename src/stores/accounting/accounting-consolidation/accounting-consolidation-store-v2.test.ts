@@ -43,6 +43,7 @@ describe('useAccountingConsolidationV2', () => {
     expect(store.business_list).toEqual([])
     expect(store.consolidation_response).toEqual({})
     expect(store.business_list_consolidate).toEqual([])
+    expect(store.consolidation_view_data_list).toEqual({})
   })
 
   it('should call _getAccountingConsolidationList and update state', async () => {
@@ -121,13 +122,13 @@ describe('useAccountingConsolidationV2', () => {
       },
     }
 
-    require('@/apis').executeApi.mockReturnValue({
+    const { executeApi } = require('@/apis')
+    executeApi.mockReturnValue({
       get: jest.fn().mockResolvedValue(mockResponse),
     })
 
     const result = await store._getDetailConsolidation(123)
 
-    expect(store.consolidation_response).toEqual({ id: 3 })
     expect(result).toEqual({
       data: { id: 3 },
       message: 'ok',
@@ -276,13 +277,12 @@ describe('useAccountingConsolidationV2', () => {
       data: {
         success: true,
         message: 'ok',
-        data: {
-          data: [{ id: 1 }],
-        },
+        data: [{ id: 1 }],
       },
     }
 
-    require('@/apis').executeApi.mockReturnValue({
+    const { executeApi } = require('@/apis')
+    executeApi.mockReturnValue({
       get: jest.fn().mockResolvedValue(mockResponse),
     })
 
@@ -290,6 +290,6 @@ describe('useAccountingConsolidationV2', () => {
 
     await store._getFilterBusinessConsolidation(1, { foo: 'bar' })
 
-    expect(store.business_list).toEqual([{ id: 1 }])
+    expect(store.consolidation_view_data_list).toEqual([{ id: 1 }])
   })
 })

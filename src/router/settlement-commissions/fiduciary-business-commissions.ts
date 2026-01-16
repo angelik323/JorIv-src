@@ -67,4 +67,21 @@ export default [
       },
     },
   },
+  {
+    path: '/liquidacion-de-comisiones/comisiones-de-negocios-fiduciarios/importar',
+    name: 'FiduciaryBusinessCommissionsImport',
+    component: () =>
+      import(
+        '@/views/settlement-commissions/fiduciary-business-commissions/v2/import/FiduciaryBusinessCommissionsImport.vue'
+      ),
+    meta: {
+      requiresAuth: true,
+      requiresFirstPasswordChanged: true,
+      requiredValidRole: {
+        module: 'SettlementCommissions',
+        view: 'BusinessTrustCommissionsList',
+        action: 'create',
+      },
+    },
+  },
 ]

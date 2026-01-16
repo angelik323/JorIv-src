@@ -406,6 +406,12 @@ const useAuditEntryOfFunctionalities = () => {
     filtersFormat.value.rows = rows
     await listAction(filtersFormat.value)
   }
+  const permissionEnable = () =>
+    validateRouter(
+      'Audit',
+      'AuditEntryOfFunctionalitiesList',
+      'action_configure'
+    )
 
   const userKeys: ResourceTypes = {
     user: ['roles', 'module_app'],
@@ -435,6 +441,7 @@ const useAuditEntryOfFunctionalities = () => {
     handleClearFilters,
     handleFilterSearch,
     handleUpdateRowsPerPage,
+    permissionEnable,
   }
 }
 

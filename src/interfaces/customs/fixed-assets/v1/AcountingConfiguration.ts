@@ -144,48 +144,52 @@ export interface IAccountingConfigFileValidation {
 }
 
 export interface IAccountingConfigValidatedRow {
-  row_number: number // ID auto-incremental para la tabla de vista previa
+  // Control tabla
+  row_number: number
 
-  // Campos del Excel
-  source: string // 'Activos fijos' | 'Bienes'
-  business_trust_id: number // Código numérico del negocio
-  business_trust_code?: string // Asociado al negocio
-  business_trust_description?: string // Obtenido del código (opcional para mostrar)
+  // Fuente
+  source: string
 
-  // Estructuras asociadas al negocio
-  account_structure_code?: string // Asociado al negocio
-  cost_center_structure_code?: string // Opcional, asociado al negocio
+  // Negocio
+  business_trust_id: number
+  business_trust_code?: number
+  business_trust_name?: string
 
-  //Comprobante
+  // Estructuras
+  account_structure_code?: string | null
+  cost_center_structure_code?: string | null
+
+  // Comprobante
   receipt_type_id?: number
-  receipt_type_code?: string | number
-  receipt_type_description?: string
+  receipt_type?: {
+    code: number | string
+    name: string
+  }
 
   receipt_subtype_id?: number
-  receipt_subtype_code?: string | number
-  receipt_subtype_description?: string
+  receipt_subtype?: {
+    code: number | string
+    name: string
+  }
 
-  // Tipo y subtipo
-  configuration_type_id: number // Código numérico del tipo
-  configuration_type_code?: string // Asociado al tipo
-  configuration_type_description?: string // Descripción obtenida del código
-  configuration_subtype_code?: string // Asociado al subtipo
-  configuration_subtype_id: string // Código numérico del subtipo
-  configuration_subtype_description?: string // Descripción obtenida del código
+  // Tipo / subtipo
+  configuration_type_id: number
+  configuration_type_description?: string
+
+  configuration_subtype_id: number
+  configuration_subtype_description?: string
 
   // Novedad
-  configuration_novelty_type_id: string // Código numérico de la novedad
-  configuration_novelty_type_code?: string // Asociado a la novedad
-  configuration_novelty_type_description?: string // Descripción obtenida del código
+  configuration_novelty_type_id: number
+  configuration_novelty_type_code?: string
 
-  // Partida
-  debit_nature: string // Naturaleza partida
-  debit_accounts_chart_id: number // Cuenta contable partida (código numérico)
+  // Partidas
+  debit_nature: string
+  debit_accounts_chart_id: number
 
-  // Contrapartida
-  credit_nature: string // Naturaleza contrapartida (opuesta a partida)
-  credit_accounts_chart_id: number // Cuenta contable contrapartida (código numérico)
+  credit_nature: string
+  credit_accounts_chart_id: number
 
   // Detalle
-  detail_transaction: string // Text input 10-20 caracteres
+  detail_transaction: string
 }

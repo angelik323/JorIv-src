@@ -113,6 +113,7 @@ export const useInformationForm = (props: {
         end_time: endTime,
       }
     }
+
     if (props.action !== 'create' && props.data) {
       const [startDate, startTime] = props.data.start_date.split(' ')
       const [endDate, endTime] = props.data.end_date.split(' ')

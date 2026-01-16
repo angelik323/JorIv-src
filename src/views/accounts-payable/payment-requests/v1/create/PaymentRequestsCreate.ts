@@ -1,6 +1,7 @@
 // core
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import moment from 'moment'
 
 // composables
 import { useGoToUrl, useMainLoader, useUtils } from '@/composables'
@@ -48,6 +49,7 @@ const usePaymentRequestsCreate = () => {
     accounts_payable: ['document_types'],
     treasury: ['payments'],
     fixed_assets: ['type', 'configuration_type'],
+    assets: ['cities'],
   }
   const keysThirdParty = { third_party: ['third_parties'] }
   const keysDocType = { third_party: ['document_types'] }
@@ -421,6 +423,43 @@ const usePaymentRequestsCreate = () => {
             : keysBudgetOperation,
           'filter[only_active]=true'
         )
+    }
+  )
+
+  watch(
+    () => [
+      basic_data_form.value?.invoice_issue_date,
+      validate.value.hasLegalizationDate,
+    ],
+    () => {
+      if (basic_data_form.value?.invoice_issue_date) {
+        basic_data_form.value.invoice_due_date = moment(
+          basic_data_form.value.invoice_issue_date
+        )
+          .add(1, 'month')
+          .subtract(1, 'day')
+          .format('YYYY-MM-DD')
+      }
+
+      if (
+        validate.value.hasLegalizationDate &&
+        basic_data_form.value?.invoice_issue_date != ''
+      ) {
+        main_information_form.value.legalization_date =
+          basic_data_form.value?.invoice_issue_date ?? ''
+      } else {
+        main_information_form.value.legalization_date = ''
+      }
+    }
+  )
+
+  watch(
+    () => main_information_form.value.legalization_date,
+    () => {
+      if (main_information_form.value.legalization_date != '') {
+        main_information_form.value.movement_date =
+          main_information_form.value.legalization_date
+      }
     }
   )
 

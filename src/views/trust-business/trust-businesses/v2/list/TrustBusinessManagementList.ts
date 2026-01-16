@@ -298,10 +298,10 @@ const useTrustBusinessManagementList = () => {
     }
     const queryString = formatParamsCustom(filtersFormat.value)
 
-    listAction(queryString ? '&' + queryString : '')
+    await listAction(queryString ? '&' + queryString : '')
   }
 
-  const updateRowsPerPage = (rowsPerPage: number) => {
+  const updateRowsPerPage = async (rowsPerPage: number) => {
     currentRowsPerPage.value = rowsPerPage
     filtersFormat.value = {
       ...filtersFormat.value,
@@ -310,7 +310,7 @@ const useTrustBusinessManagementList = () => {
     }
     const queryString = formatParamsCustom(filtersFormat.value)
 
-    listAction(queryString ? '&' + queryString : '')
+    await listAction(queryString ? '&' + queryString : '')
   }
 
   // actions
@@ -354,7 +354,7 @@ const useTrustBusinessManagementList = () => {
     }
     const queryString = formatParamsCustom(filtersFormat.value)
 
-    listAction(queryString ? '&' + queryString : '')
+    await listAction(queryString ? '&' + queryString : '')
     openMainLoader(false)
   }
 
@@ -389,7 +389,9 @@ const useTrustBusinessManagementList = () => {
 
     const reload = route.query.reload
     if (reload) {
-      await listAction()
+      setTimeout(async () => {
+        await listAction()
+      }, 3000)
     }
   })
 

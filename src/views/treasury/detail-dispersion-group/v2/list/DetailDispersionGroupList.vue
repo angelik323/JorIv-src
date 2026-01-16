@@ -78,21 +78,14 @@
 
           <TableList
             hidePagination
+            selection="multiple"
             :loading="tablePropertiesBreakdown.loading"
             :rows="tablePropertiesBreakdown.rows"
             :columns="tablePropertiesBreakdown.columns"
-            :custom-columns="['checkbox_button']"
             @update-page="handleUpdatePageBreakdown"
             @update-rows-per-page="handleUpdatePerPageBreakdown"
-          >
-            <template #checkbox_button="{ row }">
-              <q-checkbox
-                v-model="selectedRowIdBreakdown"
-                :val="row.id"
-                color="orange"
-              />
-            </template>
-          </TableList>
+            v-model:selected="selectedRowIdBreakdown"
+          />
 
           <div class="flex justify-end q-mb-md q-mt-xl q-gutter-x-md">
             <Button

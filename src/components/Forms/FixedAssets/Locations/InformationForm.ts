@@ -55,16 +55,16 @@ const useInformationform = (
   const locationsFormRef = ref()
   const isAddressGeneratorOpen = ref(false)
 
-  const defaultDateValue = computed(() => {
-    if (props.action === 'edit' && models.value.created_at) {
-      return models.value.created_at
+  const createdAtValue = computed(() => {
+    if (props.action === 'edit') {
+      return models.value.created_at ?? ''
     }
 
     return new Date().toLocaleString('sv-SE')
   })
 
   const isOtherLocation = computed(() => {
-    return models.value.location_types === 13
+    return Number(models.value.location_types) === 13
   })
 
   const handleSaveAddress = (location: ILocation) => {
@@ -102,7 +102,7 @@ const useInformationform = (
     locationsFormRef,
     location_types,
     locations,
-    defaultDateValue,
+    createdAtValue,
     isOtherLocation,
     isAddressGeneratorOpen,
     countries,

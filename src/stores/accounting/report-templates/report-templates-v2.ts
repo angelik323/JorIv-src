@@ -94,6 +94,8 @@ export const useReportTemplateStoreV2 = defineStore(
               undefined,
               TIMEOUT_ALERT
             )
+            const donwloadUrl = data.url_to_preview
+            window.open(donwloadUrl, '_blank')
           })
           .catch((error) => {
             showAlert(showCatchError(error), 'error', undefined, TIMEOUT_ALERT)
@@ -207,6 +209,8 @@ export const useReportTemplateStoreV2 = defineStore(
               undefined,
               TIMEOUT_ALERT
             )
+            const donwloadUrl = data.url_to_preview
+            window.open(donwloadUrl, '_blank')
           })
           .catch((error) => {
             showAlert(showCatchError(error), 'error', undefined, TIMEOUT_ALERT)
@@ -275,8 +279,11 @@ export const useReportTemplateStoreV2 = defineStore(
       // Template report generic v2
       async _getReportTemplate(params: Record<string, string | number>) {
         return await executeApi()
-          .get(`${URL_PATH_ACCOUNTING}/v2/report-templates/list?paginate=1`, {
-            ...params,
+          .get(`${URL_PATH_ACCOUNTING}/v2/report-templates/list?`, {
+            params: {
+              ...params,
+              paginate: 1,
+            },
           })
           .then((response) => {
             const {
@@ -383,48 +390,6 @@ export const useReportTemplateStoreV2 = defineStore(
             showAlert(showCatchError(error), 'error', undefined, TIMEOUT_ALERT)
           })
         return sucess
-      },
-
-      //Signs actions v2
-      async _deleteReportTemplateSigns(id: number | string) {
-        await executeApi()
-          .delete(
-            `${URL_PATH_ACCOUNTING}/v2/report-templates/report-template-signatures/delete/${id}`
-          )
-          .then((response) => {
-            const { message, success } = response.data
-            showAlert(
-              message,
-              success ? 'success' : 'error',
-              undefined,
-              TIMEOUT_ALERT
-            )
-          })
-          .catch((error) => {
-            showAlert(showCatchError(error), 'error', undefined, TIMEOUT_ALERT)
-          })
-      },
-
-      async _getShowReportTemplateSigns(id: number | string) {
-        await executeApi()
-          .get(
-            `${URL_PATH_ACCOUNTING}/v2/report-templates/report-template-signatures/show/${id}`
-          )
-          .then((response) => {
-            const { data, message, success } = response.data
-            if (success) {
-              this.report_template_response = data
-            }
-            showAlert(
-              message,
-              success ? 'success' : 'error',
-              undefined,
-              TIMEOUT_ALERT
-            )
-          })
-          .catch((error) => {
-            showAlert(showCatchError(error), 'error', undefined, TIMEOUT_ALERT)
-          })
       },
     },
   }

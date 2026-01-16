@@ -79,7 +79,7 @@
                         validateRouter(
                           'Fics',
                           'ClosingCollectiveInvestmentFundsList',
-                          'edit'
+                          'process'
                         )
                       "
                       :outline="true"
@@ -95,7 +95,7 @@
                         validateRouter(
                           'Fics',
                           'ClosingCollectiveInvestmentFundsList',
-                          'create'
+                          'action_import'
                         )
                       "
                       :outline="false"
@@ -116,7 +116,7 @@
                       validateRouter(
                         'Fics',
                         'ClosingCollectiveInvestmentFundsList',
-                        'delete'
+                        'undo'
                       )
                     "
                     :left-icon="defaultIconsLucide.delete"

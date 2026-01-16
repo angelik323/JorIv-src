@@ -1,5 +1,5 @@
 // vue - pinia
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
@@ -300,154 +300,146 @@ const useAccountingConfigurationImport = () => {
       openAlertModal('cargo_parcial')
     }
   }
+  const previewPagination = ref({
+    page: 1,
+    rowsPerPage: 20,
+  })
+
+  const updatePreviewPage = (page: number) => {
+    previewPagination.value.page = page
+  }
+
+  const updatePreviewRowsPerPage = (rows: number) => {
+    previewPagination.value.rowsPerPage = rows
+    previewPagination.value.page = 1
+  }
 
   // preview table
   const tablePreviewProps = ref<IBaseTableProps<IAccountingConfigValidatedRow>>(
     {
       title: 'Importar configuración contable de activos fijos y bienes',
       loading: false,
+      wrapCells: true,
       columns: [
         {
           name: 'id',
-          required: false,
           label: '#',
-          field: 'row_number',
+          field: (row) => row.row_number,
           sortable: true,
         },
         {
           name: 'source',
-          required: false,
           label: 'Fuente',
-          field: 'source',
+          field: (row) => row.source,
           sortable: true,
         },
         {
           name: 'business_id',
-          required: false,
           label: 'Negocio',
-          field: 'business_trust_id',
+          field: (row) => row.business_trust_code ?? row.business_trust_id,
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'business_description',
-          required: false,
-          label: 'Negocio',
-          field: 'business_trust_description',
+          label: 'Descripción negocio',
+          field: (row) => row.business_trust_name ?? '-',
         },
         {
           name: 'account_structure',
-          required: false,
           label: 'Estructura contable',
-          field: 'account_structure_code',
+          field: (row) => row.account_structure_code ?? '-',
         },
         {
           name: 'cost_center_structure',
-          required: false,
           label: 'Estructura centro de costos',
-          field: 'cost_center_structure_code',
+          field: (row) => row.cost_center_structure_code ?? '-',
         },
         {
           name: 'receipt_type',
-          required: false,
           label: 'Tipo de comprobante',
-          field: 'receipt_type_code',
-          style: 'max-width: 80px; min-width: 80px;',
-          headerStyle: 'white-space: normal; max-width: 80px; min-width: 80px;',
+          field: (row) =>
+            row.receipt_type
+              ? `${row.receipt_type.code} - ${row.receipt_type.name}`
+              : '-',
+          style: 'min-width: 160px;',
+          headerStyle: 'white-space: normal;',
         },
-        {
-          name: 'receipt_type_description',
-          required: false,
-          label: 'Descripción comprobante',
-          field: 'receipt_type_description',
-        },
+
         {
           name: 'receipt_subtype',
-          required: false,
           label: 'Subtipo de comprobante',
-          field: 'receipt_subtype_code',
-          style: 'max-width: 80px; min-width: 80px;',
-          headerStyle: 'white-space: normal; max-width: 80px; min-width: 80px;',
+          field: (row) =>
+            row.receipt_subtype
+              ? `${row.receipt_subtype.code} - ${row.receipt_subtype.name}`
+              : '-',
+          style: 'min-width: 160px;',
+          headerStyle: 'white-space: normal;',
         },
-        {
-          name: 'receipt_subtype_description',
-          required: false,
-          label: 'Descripción subtipo comprobante',
-          field: 'receipt_subtype_description',
-        },
+
         {
           name: 'configuration_type_code',
-          required: false,
           label: 'Código de tipo',
-          field: 'configuration_type_code',
+          field: (row) => row.configuration_type_id,
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'configuration_type_description',
-          required: false,
-          label: 'Tipo',
-          field: 'configuration_type_description',
+          label: 'Descripción tipo',
+          field: (row) => row.configuration_type_description ?? '-',
         },
         {
           name: 'configuration_subtype_code',
-          required: false,
           label: 'Código de subtipo',
-          field: 'configuration_subtype_code',
+          field: (row) => row.configuration_subtype_id,
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'configuration_subtype_description',
-          required: false,
-          label: 'Subtipo',
-          field: 'configuration_subtype_description',
+          label: 'Descripción subtipo',
+          field: (row) => row.configuration_subtype_description ?? '-',
         },
         {
           name: 'configuration_novelty_type_code',
-          required: false,
           label: 'Código novedad',
-          field: 'configuration_novelty_type_code',
+          field: (row) => row.configuration_novelty_type_code ?? '-',
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'debit_nature',
-          required: false,
           label: 'Naturaleza de partida',
-          field: 'debit_nature',
+          field: (row) => row.debit_nature,
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'debit_accounts_chart',
-          required: false,
           label: 'Cuenta contable partida',
-          field: 'debit_accounts_chart_id',
+          field: (row) => row.debit_accounts_chart_id,
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'credit_nature',
-          required: false,
-          label: 'Naturaleza de partida',
-          field: 'credit_nature',
+          label: 'Naturaleza de contrapartida',
+          field: (row) => row.credit_nature,
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'credit_accounts_chart',
-          required: false,
           label: 'Cuenta contable contrapartida',
-          field: 'credit_accounts_chart_id',
+          field: (row) => row.credit_accounts_chart_id,
           style: 'max-width: 60px; min-width: 60px;',
           headerStyle: 'white-space: normal; max-width: 60px; min-width: 60px;',
         },
         {
           name: 'detail_transaction',
-          required: false,
-          label: 'Detalle de movimiento',
-          field: 'detail_transaction',
+          label: 'Detalle registro',
+          field: (row) => row.detail_transaction,
         },
       ],
       rows: [] as IAccountingConfigValidatedRow[],
@@ -456,6 +448,39 @@ const useAccountingConfigurationImport = () => {
         lastPage: 0,
       },
     }
+  )
+
+  const visiblePreviewRows = computed(() => {
+    const start =
+      (previewPagination.value.page - 1) * previewPagination.value.rowsPerPage
+    const end = start + previewPagination.value.rowsPerPage
+
+    return tablePreviewProps.value.rows.slice(start, end)
+  })
+
+  const previewTotalPages = computed(() =>
+    Math.max(
+      1,
+      Math.ceil(
+        tablePreviewProps.value.rows.length /
+          previewPagination.value.rowsPerPage
+      )
+    )
+  )
+
+  watch(
+    () => tablePreviewProps.value.rows,
+    () => {
+      tablePreviewProps.value.pages = {
+        currentPage: previewPagination.value.page,
+        lastPage: previewTotalPages.value,
+      }
+
+      if (previewPagination.value.page > previewTotalPages.value) {
+        previewPagination.value.page = previewTotalPages.value
+      }
+    },
+    { deep: true }
   )
 
   // watchers
@@ -494,6 +519,9 @@ const useAccountingConfigurationImport = () => {
 
     tableProps,
     tablePreviewProps,
+    visiblePreviewRows,
+    updatePreviewPage,
+    updatePreviewRowsPerPage,
 
     goToList,
 

@@ -114,7 +114,9 @@ Basic data vue nuevo
               <p class="text-weight-bold no-margin">
                 Fecha de última consolidación
               </p>
-              <p class="text-weight-medium no-margin">{{}}</p>
+              <p class="text-weight-medium no-margin">
+                {{ modelsDetail.consolidation_header.date_last_consolidation }}
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-3 q-my-sm">
@@ -166,15 +168,69 @@ Basic data vue nuevo
               :pages="tableViewConsolidatedAccounting.pages"
               :custom-columns="['status', 'actions']"
               selection="single"
-              @selected="consolidationIdReferenceView = $event.selected[0]?.id"
+              @selected="consolidationIdReferenceView = $event.selected[0]"
             >
+              <template
+                #custom-header-action
+                v-if="consolidationIdReferenceView"
               >
+                <Button
+                  v-if="disabledBtnsViewExcel"
+                  :outline="true"
+                  label="Descargar excel"
+                  :leftImg="excelIcon"
+                  tooltip="Descargar excel"
+                  @click="downloadExcelFile"
+                />
+                <Button
+                  v-if="disabledBtnsViewExcelNovelty"
+                  :outline="true"
+                  label="Descargar excel novedades"
+                  :leftImg="excelIcon"
+                  tooltip="Descargar excel novedades"
+                  @click="downloadDetailsExcelFile"
+                />
+              </template>
               <template #status="{ row }">
                 <ShowStatus
                   :type="Number(row.status?.id ?? 0)"
                   statusType="accounting"
-                /> </template
-            ></TableList>
+                />
+              </template>
+              <template #actions="{ row }">
+                <Button
+                  v-if="row.status?.status === 'Exitoso'"
+                  :right-icon="defaultIconsLucide.eye"
+                  color="orange"
+                  :class-custom="'custom'"
+                  :outline="true"
+                  :tooltip="'Ver balance'"
+                  :flat="true"
+                  size=""
+                  @click="
+                    goToURL(
+                      'AccountingConsolidationView',
+                      selectedIdConsolidationView ?? 0
+                    )
+                  "
+                />
+                <Button
+                  v-if="row.status?.status === 'Con novedades'"
+                  :right-icon="defaultIconsLucide.listCheck"
+                  color="orange"
+                  :class-custom="'custom'"
+                  :outline="true"
+                  :flat="true"
+                  :tooltip="'Ver novedades'"
+                  @click="
+                    goToURL(
+                      'AccountingConsolidationDetail',
+                      selectedIdConsolidationView ?? 0
+                    )
+                  "
+                />
+              </template>
+            </TableList>
           </section>
           <section class="col-12 col-md-12 q-mt-lg q-pa-lg">
             <TableList
@@ -207,12 +263,9 @@ Basic data vue nuevo
               map_options
               :manual_option="[]"
               :mask="'YYYY-MM'"
+              required
               :placeholder="'AAAA-MM'"
-              :required="false"
-              :rules="[
-                (val) =>
-                  useRules().is_required(val, 'Periodo actual es requerido'),
-              ]"
+              :rules="[]"
               @update:model-value="
                 (val) => (modelsFilterAccounting.current_period = val)
               "
@@ -223,16 +276,10 @@ Basic data vue nuevo
               :default_value="modelsFilterAccounting.accounting_structure_id"
               :label="'Estructura contable'"
               map_options
+              required
               :manual_option="account_chart_structure_accounting"
               :placeholder="'Seleccione'"
-              :required="false"
-              :rules="[
-                (val) =>
-                  useRules().is_required(
-                    val,
-                    'Estructura contable es requerida'
-                  ),
-              ]"
+              :rules="[]"
               @update:model-value="
                 (val) => (modelsFilterAccounting.accounting_structure_id = val)
               "
@@ -245,16 +292,10 @@ Basic data vue nuevo
               "
               :label="'Desde negocio consolidador'"
               map_options
+              required
               :manual_option="business_trusts_to_consolidate"
               :placeholder="'Seleccione'"
-              :required="false"
-              :rules="[
-                (val) =>
-                  useRules().is_required(
-                    val,
-                    'Desde negocio consolidador es requerido'
-                  ),
-              ]"
+              :rules="[]"
               @update:model-value="
                 (val) =>
                   (modelsFilterAccounting.from_consolidation_business_code =
@@ -276,14 +317,11 @@ Basic data vue nuevo
               :default_value="modelsFilterAccounting.daily_closing"
               :label="'Tipo cierre'"
               :placeholder="'Seleccione'"
-              :required="false"
               map_options
+              required
               :disabled="modelsFilterAccounting.daily_closing === 'Mensual'"
               :manual_option="modifyManualOptions"
-              :rules="[
-                (val) =>
-                  useRules().is_required(val, 'Tipo cierre es requerido'),
-              ]"
+              :rules="[]"
               @update:model-value="
                 (val) => (modelsFilterAccounting.daily_closing = val)
               "
@@ -294,16 +332,10 @@ Basic data vue nuevo
               :default_value="modelsFilterAccounting.date_to_consolidate"
               :label="'Consolidar a fecha'"
               map_options
+              required
               :manual_option="[]"
               :placeholder="'AAAA-MM-DD'"
-              :required="false"
-              :rules="[
-                (val) =>
-                  useRules().is_required(
-                    val,
-                    'Consolidar a fecha es requerido'
-                  ),
-              ]"
+              :rules="[]"
               @update:model-value="
                 (val) => (modelsFilterAccounting.date_to_consolidate = val)
               "
@@ -316,16 +348,10 @@ Basic data vue nuevo
               "
               :label="'Hasta negocio consolidador'"
               map_options
+              required
               :manual_option="business_trusts_to_consolidate"
               :placeholder="'Seleccione'"
-              :required="false"
-              :rules="[
-                (val) =>
-                  useRules().is_required(
-                    val,
-                    'Hasta negocio consolidador es requerido'
-                  ),
-              ]"
+              :rules="[]"
               @update:model-value="
                 (val) =>
                   (modelsFilterAccounting.to_consolidation_business_code = val)
@@ -386,7 +412,6 @@ Basic data vue nuevo
     </VCard>
     <section v-if="action === 'process' && filterAndTableRef">
       <FiltersComponent
-        v-if="!visibleBtn"
         :ref="filterComponentRef"
         :fields="filterBasicDataConfig"
         @filter="handleFilterSearch"
@@ -463,10 +488,10 @@ Basic data vue nuevo
         <div class="row q-gutter-x-md justify-end">
           <div class="col-auto">
             <Button
+              v-if="filterAndTableRef"
               :outline="false"
               label="Consolidar"
               size="md"
-              v-if="filterAndTableRef"
               unelevated
               color="orange"
               :disabled="selectedRows.length === 0"
@@ -504,9 +529,6 @@ import ShowStatus from '@/components/showStatus/v2/ShowStatus.vue'
 //Interfaces
 import { ActionTypeProcess } from '@/interfaces/global'
 import { IAccountingConsolidationBasicData } from '@/interfaces/customs/accounting/AccountingConsolidationV2'
-
-//Comoposables
-import { useRules } from '@/composables/useRules'
 
 //Utils and icons
 import { defaultIconsLucide } from '@/utils'
@@ -552,6 +574,9 @@ const {
   tableViewDataChildren,
   consolidationIdReferenceView,
   modifyManualOptions,
+  selectedIdConsolidationView,
+  disabledBtnsViewExcel,
+  disabledBtnsViewExcelNovelty,
   //Excel export functions
   handleFilterSearchView,
   downloadDetailsExcelFile,

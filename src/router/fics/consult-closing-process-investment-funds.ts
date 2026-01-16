@@ -11,7 +11,7 @@ export default [
       requiresFirstPasswordChanged: true,
       requiresValidRole: {
         module: 'Fics',
-        view: 'ClosingCollectiveInvestmentFundsList',
+        view: 'ConsultClosingProcessInvestmentFundsList',
       },
     },
   },

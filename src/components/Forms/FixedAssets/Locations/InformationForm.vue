@@ -10,15 +10,9 @@
             :required="false"
             :rules="[]"
             disabled
-            mask="YYYY-MM-DD HH:mm"
-            :default_value="defaultDateValue"
+            mask="YYYY-MM-DD"
+            :default_value="createdAtValue"
           />
-          <div v-else>
-            <label class="text-weight-bold no-margin">Fecha de creación</label>
-            <p class="text-weight-medium no-margin">
-              {{ models.created_at ?? 'Sin fecha' }}
-            </p>
-          </div>
         </div>
       </div>
 
@@ -33,12 +27,6 @@
           :required="false"
           disabled
         />
-        <div v-else>
-          <label class="text-weight-bold no-margin">Creado por</label>
-          <p class="text-weight-medium no-margin">
-            {{ models.created_by_name ?? 'Sin información' }}
-          </p>
-        </div>
       </div>
 
       <!-- Fecha de actualización -->
@@ -52,15 +40,6 @@
           mask="YYYY-MM-DD"
           disabled
         />
-
-        <div v-else>
-          <label class="text-weight-bold no-margin"
-            >Fecha de actualización</label
-          >
-          <p class="text-weight-medium no-margin">
-            {{ models.updated_at ?? 'Sin fecha' }}
-          </p>
-        </div>
       </div>
 
       <!-- Actualizado por -->
@@ -243,7 +222,7 @@ const emits =
 const {
   models,
   locationsFormRef,
-  defaultDateValue,
+  createdAtValue,
   location_types,
   locations,
   isOtherLocation,

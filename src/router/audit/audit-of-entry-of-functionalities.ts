@@ -29,7 +29,7 @@ export default [
       requiredValidRole: {
         module: 'Audit',
         view: 'AuditEntryOfFunctionalitiesList',
-        action: 'edit',
+        action: 'action_configure',
       },
     },
   },

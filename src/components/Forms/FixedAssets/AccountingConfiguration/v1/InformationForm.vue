@@ -155,7 +155,7 @@
                   label="Estructura contable"
                   :rules="[]"
                   :default_value="models.account_structures_description"
-                  :placeholder="isLoadingStructures ? 'Cargando...' : 'N/A'"
+                  :placeholder="isLoadingStructures ? 'Cargando...' : ''"
                 />
                 <div v-else>
                   <p class="text-weight-bold q-mb-sm">Estructura contable</p>
@@ -170,7 +170,7 @@
                   required
                   disabled
                   label="Estructura centro de costos"
-                  :placeholder="isLoadingStructures ? 'Cargando...' : 'N/A'"
+                  :placeholder="isLoadingStructures ? 'Cargando...' : ''"
                   :rules="[]"
                   :default_value="models.cost_centers_structures_description"
                 />

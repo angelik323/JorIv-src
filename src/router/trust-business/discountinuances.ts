@@ -79,7 +79,7 @@ export default [
       requiredValidRole: {
         module: 'BusinessTrust',
         view: 'DiscontinuancesList',
-        action: 'edit',
+        action: 'action_authorize',
       },
     },
   },

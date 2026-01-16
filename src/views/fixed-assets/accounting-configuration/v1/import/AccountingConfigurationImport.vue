@@ -142,9 +142,11 @@
               :title="tablePreviewProps.title"
               :loading="tablePreviewProps.loading"
               :columns="tablePreviewProps.columns"
-              :rows="tablePreviewProps.rows"
+              :rows="visiblePreviewRows"
               :pages="tablePreviewProps.pages"
               :custom-columns="['id']"
+              @update-page="updatePreviewPage"
+              @update-rows-per-page="updatePreviewRowsPerPage"
             >
               <template #id="{ index }">
                 <span>{{ index + 1 }}</span>
@@ -230,6 +232,10 @@ const {
   tabs,
   tabActive,
   tabActiveIdx,
+
+  visiblePreviewRows,
+  updatePreviewPage,
+  updatePreviewRowsPerPage,
 
   goToList,
 

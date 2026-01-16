@@ -23,6 +23,7 @@
               (val: string) => useRules().is_required(val)
             ]"
             @update:modelValue="models.business_trust_id = $event"
+            disabled
           />
           <div v-else class="text-black-90 q-mt-md">
             <p class="text-weight-bold no-margin">Negocio</p>

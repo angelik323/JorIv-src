@@ -11,7 +11,7 @@ import { computed } from 'vue'
 import ChatView from '@/components/chat/ChatWindows.vue'
 
 // Get webhook URL from environment variables
-const webhookUrl = 'https://n8n.srv891132.hstgr.cloud/webhook/fidu'
+const webhookUrl = 'https://n8n.srv891132.hstgr.cloud/webhook/chatbot-fidu'
 
 // 'https://jarzusa.app.n8n.cloud/webhook/80682c8a-1ef8-478f-869e-a0bbca587d5e'
 

@@ -55,6 +55,13 @@
                   created_by_name: row.created_by?.name,
                   updated_by_name: row.updated_by?.name,
                   updated_at: row.updated_at,
+                  created_at: row.created_at,
+                  country_name: row.country?.name,
+                  address: row.address,
+                  city_name: row.city?.name,
+                  department_name: row.department?.name,
+                  location_types: row.location_type?.name,
+                  locations: row.parent?.address,
                 })
               "
             />

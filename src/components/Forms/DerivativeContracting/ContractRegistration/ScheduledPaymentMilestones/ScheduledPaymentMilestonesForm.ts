@@ -111,7 +111,7 @@ const useScheduledPaymentMilestonesForm = (
           required: true,
           label: 'Valor del hito COP',
           align: 'left',
-          field: (row) => row.local_amount,
+          field: 'local_amount',
           sortable: true,
           format: (val) =>
             formatCurrencyString(val, { showCurrencySymbol: true }) ??
@@ -162,10 +162,7 @@ const useScheduledPaymentMilestonesForm = (
       payment_type_name: configData.payment_type_name ?? '',
       scheduled_date: configData.scheduled_date,
       foreign_amount: configData.foreign_amount,
-      local_amount: (
-        Number(configData.foreign_amount ?? 0) *
-        Number(models.value.trm_value_raw ?? 1)
-      ).toString(),
+      local_amount: configData.local_amount,
       applies_budget: configData.applies_budget ?? false,
       is_new_milestone: props.action === 'create',
     }
@@ -293,20 +290,24 @@ const useScheduledPaymentMilestonesForm = (
         scheduledForeignTotal * (models.value.trm_value_raw ?? 0)
       ).toString()
 
+      const scheduledLocalTotal = tableProperties.value.rows.reduce(
+        (acc, milestone) => acc + (cleanCurrencyToNumber(milestone.local_amount ?? 0)),
+        0
+      )
+
       models.value.outstanding_foreign_amount = String(
         cleanCurrencyToNumber(models.value.amount ?? 0) -
           scheduledForeignTotal
       )
-      
-      models.value.outstanding_local_amount = (
-        Number(models.value.outstanding_foreign_amount ?? 0) * (models.value.trm_value_raw ?? 0)
-      ).toString()
+
+      models.value.outstanding_local_amount = String(
+        cleanCurrencyToNumber(models.value.contract_value ?? 0) -
+          scheduledLocalTotal
+      )
     },
     { immediate: true, deep: true }
   )
 
-
-  
   return {
     models,
     formElementRef,

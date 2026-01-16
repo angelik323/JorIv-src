@@ -1,5 +1,5 @@
 // Core
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import moment from 'moment'
 
@@ -61,23 +61,19 @@ const usePaymentInstructionsList = () => {
   const requestBusinesses = ref()
   const officeLabelMap = ref<Record<string, string>>({})
   const businessLabelMap = ref<Record<string, string>>({})
+  const businessFrom = ref()
+  const businessTo = ref()
 
   // Configs
   const keys = {
     accounts_payable: [
       'payment_request_businesses',
       'payment_request_statuses',
-      'payment_request_numbers',
     ],
   }
-
-  const keysOffice = {
-    fics: ['offices'],
-  }
-
-  const keysBusiness = {
-    trust_business: ['business_trusts'],
-  }
+  const keysOffice = { fics: ['offices'] }
+  const keysBusiness = { trust_business: ['business_trusts'] }
+  const keysRequest = { accounts_payable: ['payment_request_numbers'] }
 
   const headerProps = {
     title: 'Instrucciones de pago',
@@ -116,6 +112,7 @@ const usePaymentInstructionsList = () => {
       clean_value: true,
       placeholder: 'Seleccione',
       hide: false,
+      onChange: (val: string) => (businessFrom.value = val),
     },
     {
       name: 'to_business_code',
@@ -129,6 +126,7 @@ const usePaymentInstructionsList = () => {
       clean_value: true,
       placeholder: 'Seleccione',
       hide: false,
+      onChange: (val: string) => (businessTo.value = val),
     },
     {
       name: 'from_request_id',
@@ -383,6 +381,20 @@ const usePaymentInstructionsList = () => {
     await listAction(filtersFormat.value)
   }
 
+  watch([businessFrom, businessTo], async ([from, to]) => {
+    if (!from && !to) {
+      _resetKeys(keysRequest)
+      return
+    }
+
+    const filters: string[] = []
+    if (from) filters.push(`filter[from_business_code]=${from}`)
+    if (to) filters.push(`filter[to_business_code]=${to}`)
+    const query = filters.join('&')
+
+    await _getResources(keysRequest, query)
+  })
+
   onMounted(async () => {
     openMainLoader(true)
     await _getResources(keys)
@@ -397,6 +409,7 @@ const usePaymentInstructionsList = () => {
     _resetKeys(keys)
     _resetKeys(keysOffice)
     _resetKeys(keysBusiness)
+    _resetKeys(keysRequest)
   })
 
   return {

@@ -251,7 +251,7 @@ const sendMessage = async () => {
     const response = await fetch(props.webhookUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/html; charset=UTF-8',
       },
       body: JSON.stringify({
         chat_id: chatId.value,

@@ -88,7 +88,11 @@ export interface ICheckTreasuryReceiptResponse {
       last_name: string
     } | null
     collection_check: string | null
-    check_bank: string | null
+    check_bank: {
+      id: number
+      description: string
+      bank_code: string
+    } | null
   }
 }
 

@@ -63,6 +63,7 @@ const useTaxSettlementList = () => {
     settlement_formula_person_types,
     payment_request_statuses,
     payment_requests,
+    tax_settlement_statuses,
   } = storeToRefs(accountsPayableResourcesStore)
 
   const cancellationStore = useCancellationRejectionReasonsStore('v1')
@@ -93,6 +94,10 @@ const useTaxSettlementList = () => {
 
   const paymentRequestStatusesResourceKeys = {
     accounts_payable: ['payment_request_statuses'],
+  }
+
+  const taxSettlementStatusesResourceKeys = {
+    accounts_payable: ['tax_settlement_statuses'],
   }
 
   const cancellationReasonTypesResourceKeys = {
@@ -511,7 +516,7 @@ const useTaxSettlementList = () => {
       type: 'q-select',
       value: '',
       class: 'col-12 col-md-3',
-      options: payment_request_statuses,
+      options: tax_settlement_statuses,
       disable: false,
       clean_value: true,
       placeholder: 'Todos',
@@ -648,7 +653,7 @@ const useTaxSettlementList = () => {
     openMainLoader(true)
     await _getResources(
       businessTrustsResourceKeys,
-      'filter[status_id]=59,57,67'
+      'filter[status_id]=59,57,67&can_manage=true'
     )
     openMainLoader(false)
 
@@ -658,6 +663,10 @@ const useTaxSettlementList = () => {
 
     openMainLoader(true)
     await _getResources(paymentRequestStatusesResourceKeys)
+    openMainLoader(false)
+
+    openMainLoader(true)
+    await _getResources(taxSettlementStatusesResourceKeys)
     openMainLoader(false)
 
     openMainLoader(true)
@@ -672,6 +681,7 @@ const useTaxSettlementList = () => {
     _resetKeys(businessTrustsResourceKeys)
     _resetKeys(settlementFormulaPersonTypesResourceKeys)
     _resetKeys(paymentRequestStatusesResourceKeys)
+    _resetKeys(taxSettlementStatusesResourceKeys)
     _resetKeys(cancellationReasonTypesResourceKeys)
     _resetKeys(paymentRequestByBusinessResourceKeys)
   })
@@ -700,6 +710,7 @@ const useTaxSettlementList = () => {
     settlement_formula_person_types,
     payment_request_statuses,
     payment_requests,
+    tax_settlement_statuses,
     rejection_reasons,
 
     // refs

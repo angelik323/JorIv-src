@@ -24,7 +24,16 @@ const BulkUploadTemplatesList = () => {
   const { data_bulk_upload_templates_list, data_bulk_upload_templates_pages } =
     storeToRefs(useBulkUploadTemplatesStore('v1'))
 
-  const filterFormat = ref()
+  const filterFormat = ref<
+    {
+      page: number
+      rows: number
+    } & Record<string, string | number>
+  >({
+    page: 1,
+    rows: 20,
+  })
+  const isTableEmpty = ref(true)
 
   const headerBreadcrumbs = {
     title: 'Plantillas de cargues masivos',
@@ -165,32 +174,32 @@ const BulkUploadTemplatesList = () => {
   }) => {
     filterFormat.value = {
       ...$filters,
+      page: 1,
+      rows: filterFormat.value.rows,
     }
     const queryString = formatParamsCustom(filterFormat.value)
     listAction(queryString ? '&' + queryString : '')
   }
 
   const updatePage = (page: number) => {
-    if (!filterFormat.value) return
+    filterFormat.value.page = page
 
-    const queryString = formatParamsCustom({
-      ...filterFormat.value,
-      page,
-    })
+    const queryString = formatParamsCustom(filterFormat.value)
 
     listAction(`&${queryString}`)
   }
 
-  const updateRows = (per_page: number) => {
-    const queryString = formatParamsCustom({
-      ...filterFormat.value,
-      per_page,
-    })
+  const updateRows = (rows: number) => {
+    filterFormat.value.page = 1
+    filterFormat.value.rows = rows
+
+    const queryString = formatParamsCustom(filterFormat.value)
 
     listAction(`&${queryString}`)
   }
 
   const handlerClear = () => {
+    isTableEmpty.value = true
     tableProps.value.rows = []
   }
 
@@ -215,6 +224,7 @@ const BulkUploadTemplatesList = () => {
     data_bulk_upload_templates_list,
     (val) => {
       tableProps.value.rows = [...val]
+      isTableEmpty.value = !val.length
 
       const { currentPage, lastPage } = data_bulk_upload_templates_pages.value
       tableProps.value.pages = {
@@ -239,6 +249,7 @@ const BulkUploadTemplatesList = () => {
     handleGoToCreate,
     headerBreadcrumbs,
     defaultIconsLucide,
+    isTableEmpty,
   }
 }
 

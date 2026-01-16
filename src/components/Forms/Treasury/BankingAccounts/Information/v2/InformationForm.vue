@@ -349,7 +349,7 @@
               ]"
               @update:model-value="updateUpperCase('account_number', $event)"
             />
-            <p v-else class="mb-0 text-grey-9">
+            <p v-else class="mb-0 text-grey-9 word-break-all">
               {{ models.account_number ?? 'No registrado' }}
             </p>
           </div>

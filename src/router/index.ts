@@ -118,17 +118,17 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-  const { token, firstLogin, isAdmin } = storeToRefs(useLogin())
+  const { token, /* firstLogin, */ isAdmin } = storeToRefs(useLogin())
   const { validateRouter } = useRouteValidator()
   const { showAlert } = useAlert()
 
-  if (to.meta.requiresFirstPasswordChanged && firstLogin.value && token.value) {
-    showAlert(
-      '¡Por su seguridad, debe cambiar la contraseña para acceder a los modulos!',
-      'info'
-    )
-    return { name: 'ChangePassword' }
-  }
+  // if (to.meta.requiresFirstPasswordChanged && firstLogin.value && token.value) {
+  //   showAlert(
+  //     '¡Por su seguridad, debe cambiar la contraseña para acceder a los modulos!',
+  //     'info'
+  //   )
+  //   return { name: 'ChangePassword' }
+  // }
 
   if (
     token.value &&
